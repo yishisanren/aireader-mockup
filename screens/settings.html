@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 阅 · 设置</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/iphone-frame.css">
+<link rel="stylesheet" href="../assets/css/index-page.css">
+<style>
+  .iphone-screen { background: var(--c-bg-secondary); }
+
+  .settings-nav {
+    padding: 8px 16px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--c-bg-secondary);
+  }
+  .settings-nav .back {
+    color: var(--c-accent);
+    font-size: 17px;
+  }
+  .settings-nav .title {
+    font-size: 17px;
+    font-weight: 600;
+  }
+  .settings-nav .placeholder { width: 50px; }
+
+  .settings-group {
+    margin: 0 16px 28px;
+  }
+  .settings-group-header {
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--c-fg-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .settings-card {
+    background: var(--c-bg-tertiary);
+    border-radius: var(--r-md);
+    overflow: hidden;
+  }
+  [data-theme="dark"] .settings-card { background: #1c1c1e; }
+
+  .settings-row {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 0.5px solid var(--c-separator);
+    min-height: 44px;
+    gap: 12px;
+  }
+  .settings-row:last-child { border-bottom: none; }
+
+  .settings-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .settings-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+  }
+  .icon-blue   { background: #007AFF; }
+  .icon-purple { background: #5E5CE6; }
+  .icon-orange { background: #FF9500; }
+  .icon-red    { background: #FF3B30; }
+  .icon-green  { background: #34C759; }
+  .icon-gray   { background: #8E8E93; }
+
+  .settings-label {
+    flex: 1;
+    font-size: 17px;
+    color: var(--c-fg-primary);
+  }
+  .settings-value {
+    font-size: 17px;
+    color: var(--c-fg-tertiary);
+  }
+  .settings-row .chevron {
+    color: var(--c-fg-quaternary);
+    font-size: 16px;
+  }
+
+  /* iOS Switch */
+  .ios-switch {
+    width: 51px;
+    height: 31px;
+    background: #E9E9EA;
+    border-radius: 999px;
+    position: relative;
+    transition: background 0.2s;
+  }
+  [data-theme="dark"] .ios-switch { background: #39393D; }
+  .ios-switch.on { background: var(--c-success); }
+  .ios-switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 27px;
+    height: 27px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+  }
+  .ios-switch.on::after { transform: translateX(20px); }
+
+  /* Segmented control */
+  .segmented {
+    display: flex;
+    background: var(--c-bg-secondary);
+    border-radius: 8px;
+    padding: 2px;
+    gap: 2px;
+  }
+  [data-theme="dark"] .segmented { background: #2c2c2e; }
+  .seg-item {
+    flex: 1;
+    padding: 6px 12px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--c-fg-primary);
+    border-radius: 6px;
+  }
+  .seg-item.active {
+    background: var(--c-bg-tertiary);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    font-weight: 600;
+  }
+  [data-theme="dark"] .seg-item.active { background: #48484a; }
+
+  .destructive { color: var(--c-error) !important; }
+</style>
+</head>
+<body>
+
+<div class="page-wrap" style="padding-top: 40px;">
+  <div style="text-align:center; margin-bottom: 30px;">
+    <a href="../index.html" style="color: var(--c-accent); text-decoration:none; font-size:15px;">← 返回索引</a>
+    <h2 style="margin: 16px 0 4px; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">设置 / SettingsView</h2>
+    <p style="color: var(--c-fg-secondary); margin: 0;">极简设置 · 渲染模式 / 字号 / 隐私 / 关于</p>
+  </div>
+
+  <div class="iphone-frame">
+    <div class="iphone-screen">
+
+      <!-- Nav -->
+      <div style="height: 54px; flex-shrink: 0;"></div>
+      <div class="settings-nav">
+        <span class="back">‹ 返回</span>
+        <span class="title">设置</span>
+        <span class="placeholder"></span>
+      </div>
+
+      <div class="screen-content">
+
+        <!-- 渲染 -->
+        <div class="settings-group">
+          <div class="settings-group-header">渲染</div>
+          <div class="settings-card">
+            <div class="settings-row">
+              <div class="settings-icon icon-blue">
+                <svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg>
+              </div>
+              <span class="settings-label">默认模式</span>
+              <div class="segmented" style="width: 140px;">
+                <div class="seg-item active">阅读</div>
+                <div class="seg-item">原样</div>
+              </div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-icon icon-purple">
+                <svg viewBox="0 0 24 24"><path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/></svg>
+              </div>
+              <span class="settings-label">字号</span>
+              <div class="segmented" style="width: 140px;">
+                <div class="seg-item">小</div>
+                <div class="seg-item active">中</div>
+                <div class="seg-item">大</div>
+              </div>
+            </div>
+            <div class="settings-row">
+              <div class="settings-icon icon-orange">
+                <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+              </div>
+              <span class="settings-label">允许联网加载</span>
+              <div class="ios-switch"></div>
+            </div>
+          </div>
+          <p style="padding: 8px 20px 0; font-size: 13px; color: var(--c-fg-tertiary); line-height: 1.4;">
+            关闭后将拒绝加载外部 CDN 资源（如 Chart.js）。开启可获得更完整渲染，但可能泄露访问记录。
+          </p>
+        </div>
+
+        <!-- 数据 -->
+        <div class="settings-group">
+          <div class="settings-group-header">数据</div>
+          <div class="settings-card">
+            <div class="settings-row">
+              <div class="settings-icon icon-gray">
+                <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              </div>
+              <span class="settings-label">历史记录</span>
+              <span class="settings-value">23 / 50</span>
+              <span class="chevron">›</span>
+            </div>
+            <div class="settings-row">
+              <div class="settings-icon icon-red">
+                <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+              </div>
+              <span class="settings-label destructive">清空全部历史</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 关于 -->
+        <div class="settings-group">
+          <div class="settings-group-header">关于</div>
+          <div class="settings-card">
+            <div class="settings-row">
+              <div class="settings-icon icon-blue">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v4z"/></svg>
+              </div>
+              <span class="settings-label">关于 AI 阅</span>
+              <span class="settings-value">v1.0 (1)</span>
+              <span class="chevron">›</span>
+            </div>
+            <div class="settings-row">
+              <div class="settings-icon icon-green">
+                <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+              </div>
+              <span class="settings-label">隐私政策</span>
+              <span class="chevron">›</span>
+            </div>
+            <div class="settings-row">
+              <div class="settings-icon icon-purple">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              </div>
+              <span class="settings-label">反馈邮箱</span>
+              <span class="chevron">›</span>
+            </div>
+          </div>
+          <p style="padding: 16px 20px 0; font-size: 12px; color: var(--c-fg-tertiary); text-align: center; line-height: 1.5;">
+            AI 阅 · 完全本地运行 · 零数据收集<br>
+            Made with ♥ in Beijing
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="../assets/js/shared.js"></script>
+<script>
+  document.querySelectorAll('.ios-switch').forEach(s => {
+    s.addEventListener('click', () => s.classList.toggle('on'));
+  });
+  document.querySelectorAll('.segmented').forEach(seg => {
+    seg.querySelectorAll('.seg-item').forEach(item => {
+      item.addEventListener('click', () => {
+        seg.querySelectorAll('.seg-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+  });
+</script>
+</body>
+</html>

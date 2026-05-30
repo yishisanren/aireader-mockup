@@ -1,0 +1,133 @@
+/* ============================================
+   AIReader Design Tokens — iOS Native Premium
+   ============================================ */
+
+:root {
+  /* --- Color System (Light) --- */
+  --c-bg:              #FFFFFF;
+  --c-bg-secondary:    #F2F2F7;
+  --c-bg-tertiary:     #FFFFFF;
+  --c-bg-grouped:      #F2F2F7;
+
+  --c-fg-primary:      #000000;
+  --c-fg-secondary:    rgba(60, 60, 67, 0.85);
+  --c-fg-tertiary:     rgba(60, 60, 67, 0.6);
+  --c-fg-quaternary:   rgba(60, 60, 67, 0.3);
+
+  --c-separator:       rgba(60, 60, 67, 0.18);
+  --c-separator-opaque:#C6C6C8;
+
+  --c-accent:          #007AFF;          /* iOS System Blue */
+  --c-accent-soft:     rgba(0, 122, 255, 0.12);
+  --c-success:         #34C759;
+  --c-warning:         #FF9500;
+  --c-error:           #FF3B30;
+
+  /* --- Typography --- */
+  --font-system:       -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Helvetica, "Microsoft YaHei", Arial, sans-serif;
+  --font-mono:         "SF Mono", ui-monospace, "Cascadia Mono", "Menlo", "Consolas", monospace;
+
+  --fs-largeTitle:     34px;
+  --fs-title1:         28px;
+  --fs-title2:         22px;
+  --fs-title3:         20px;
+  --fs-headline:       17px;
+  --fs-body:           17px;
+  --fs-callout:        16px;
+  --fs-subhead:        15px;
+  --fs-footnote:       13px;
+  --fs-caption1:       12px;
+  --fs-caption2:       11px;
+
+  --lh-tight:          1.2;
+  --lh-normal:         1.4;
+  --lh-reading:        1.65;
+
+  /* --- Spacing --- */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-8:  32px;
+  --s-10: 40px;
+
+  /* --- Radius --- */
+  --r-sm:  8px;
+  --r-md:  12px;
+  --r-lg:  16px;
+  --r-xl:  20px;
+  --r-pill: 999px;
+
+  /* --- Shadows --- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+
+  /* --- iPhone Frame --- */
+  --iphone-width:  390px;   /* iPhone 15 logical width */
+  --iphone-height: 844px;
+  --iphone-radius: 54px;
+  --iphone-bezel:  12px;
+  --iphone-frame:  #1c1c1e;
+
+  --notch-width:   126px;
+  --notch-height:  35px;
+}
+
+/* --- Dark Mode --- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg:              #000000;
+    --c-bg-secondary:    #1C1C1E;
+    --c-bg-tertiary:     #2C2C2E;
+    --c-bg-grouped:      #000000;
+
+    --c-fg-primary:      #FFFFFF;
+    --c-fg-secondary:    rgba(235, 235, 245, 0.85);
+    --c-fg-tertiary:     rgba(235, 235, 245, 0.6);
+    --c-fg-quaternary:   rgba(235, 235, 245, 0.3);
+
+    --c-separator:       rgba(84, 84, 88, 0.65);
+    --c-separator-opaque:#38383A;
+
+    --c-accent:          #0A84FF;
+    --c-accent-soft:     rgba(10, 132, 255, 0.18);
+    --c-success:         #30D158;
+    --c-warning:         #FF9F0A;
+    --c-error:           #FF453A;
+
+    --iphone-frame:      #2c2c2e;
+  }
+}
+
+/* Manual dark mode class override */
+[data-theme="dark"] {
+  --c-bg:              #000000;
+  --c-bg-secondary:    #1C1C1E;
+  --c-bg-tertiary:     #2C2C2E;
+  --c-bg-grouped:      #000000;
+  --c-fg-primary:      #FFFFFF;
+  --c-fg-secondary:    rgba(235, 235, 245, 0.85);
+  --c-fg-tertiary:     rgba(235, 235, 245, 0.6);
+  --c-fg-quaternary:   rgba(235, 235, 245, 0.3);
+  --c-separator:       rgba(84, 84, 88, 0.65);
+  --c-separator-opaque:#38383A;
+  --c-accent:          #0A84FF;
+  --c-accent-soft:     rgba(10, 132, 255, 0.18);
+}
+
+[data-theme="light"] {
+  --c-bg:              #FFFFFF;
+  --c-bg-secondary:    #F2F2F7;
+  --c-bg-tertiary:     #FFFFFF;
+  --c-fg-primary:      #000000;
+  --c-fg-secondary:    rgba(60, 60, 67, 0.85);
+  --c-fg-tertiary:     rgba(60, 60, 67, 0.6);
+  --c-fg-quaternary:   rgba(60, 60, 67, 0.3);
+  --c-separator:       rgba(60, 60, 67, 0.18);
+  --c-separator-opaque:#C6C6C8;
+  --c-accent:          #007AFF;
+  --c-accent-soft:     rgba(0, 122, 255, 0.12);
+}

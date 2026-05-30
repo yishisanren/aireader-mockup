@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 阅 · 主界面</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/iphone-frame.css">
+<link rel="stylesheet" href="../assets/css/index-page.css">
+<style>
+  /* --- HomeView Specific Styles --- */
+  .home-nav-bar {
+    padding: 8px 20px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .home-nav-bar h1 {
+    font-size: var(--fs-largeTitle);
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    margin: 0;
+    color: var(--c-fg-primary);
+  }
+  .home-nav-bar .nav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--c-bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 6px;
+  }
+  .home-nav-bar .nav-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--c-accent);
+  }
+
+  /* Clipboard detection card */
+  .clipboard-card {
+    margin: 4px 20px 24px;
+    padding: 16px;
+    background: var(--c-accent-soft);
+    border-radius: var(--r-md);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .clipboard-card .cb-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--c-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .clipboard-card .cb-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: white;
+  }
+  .clipboard-card .cb-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .clipboard-card .cb-title {
+    font-size: var(--fs-subhead);
+    font-weight: 600;
+    color: var(--c-fg-primary);
+    margin: 0 0 2px;
+  }
+  .clipboard-card .cb-desc {
+    font-size: var(--fs-footnote);
+    color: var(--c-fg-secondary);
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .clipboard-card .cb-chevron {
+    flex-shrink: 0;
+    color: var(--c-accent);
+    font-size: 18px;
+  }
+
+  /* Section header */
+  .section-header {
+    padding: 0 20px 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .section-header h2 {
+    font-size: var(--fs-title3);
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.3px;
+  }
+  .section-header .clear-btn {
+    font-size: var(--fs-subhead);
+    color: var(--c-accent);
+  }
+
+  /* History list */
+  .history-list {
+    margin: 0 16px 16px;
+    background: var(--c-bg-tertiary);
+    border-radius: var(--r-md);
+    overflow: hidden;
+  }
+  [data-theme="dark"] .history-list,
+  @media (prefers-color-scheme: dark) {
+    .history-list { background: var(--c-bg-secondary); }
+  }
+  .history-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 0.5px solid var(--c-separator);
+    gap: 12px;
+  }
+  .history-item:last-child {
+    border-bottom: none;
+  }
+  .file-icon {
+    width: 40px;
+    height: 50px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 6px;
+    font-size: 9px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+  }
+  .file-icon::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background: rgba(255,255,255,0.25);
+    clip-path: polygon(0 0, 100% 100%, 100% 0);
+  }
+  .file-icon.html { background: linear-gradient(135deg, #E44D26 0%, #F16529 100%); }
+  .file-icon.md   { background: linear-gradient(135deg, #34495E 0%, #2C3E50 100%); }
+  .file-icon.html::after { content: 'HTML'; }
+  .file-icon.md::after   { content: 'MD'; }
+  .file-icon::after {
+    position: absolute;
+    bottom: 5px;
+  }
+
+  .history-meta {
+    flex: 1;
+    min-width: 0;
+  }
+  .history-meta .name {
+    font-size: var(--fs-body);
+    font-weight: 500;
+    color: var(--c-fg-primary);
+    margin: 0 0 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .history-meta .sub {
+    font-size: var(--fs-footnote);
+    color: var(--c-fg-tertiary);
+    margin: 0;
+  }
+  .history-item .chevron {
+    color: var(--c-fg-quaternary);
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Bottom action button */
+  .bottom-action {
+    position: absolute;
+    bottom: 24px;
+    left: 20px;
+    right: 20px;
+    padding: 14px;
+    background: var(--c-accent);
+    color: white;
+    border-radius: var(--r-md);
+    text-align: center;
+    font-size: var(--fs-headline);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+  }
+  .bottom-action svg {
+    width: 18px;
+    height: 18px;
+    fill: white;
+  }
+
+  .screen-content { padding-bottom: 100px; }
+</style>
+</head>
+<body>
+
+<div class="page-wrap" style="padding-top: 40px;">
+  <div style="text-align:center; margin-bottom: 30px;">
+    <a href="../index.html" style="color: var(--c-accent); text-decoration:none; font-size:15px;">← 返回索引</a>
+    <h2 style="margin: 16px 0 4px; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">主界面 / HomeView</h2>
+    <p style="color: var(--c-fg-secondary); margin: 0;">最近阅读 · 剪贴板检测 · 文件选择入口</p>
+  </div>
+
+  <div class="iphone-frame">
+    <div class="iphone-screen">
+
+      <!-- Nav -->
+      <div class="home-nav-bar">
+        <h1>AI 阅</h1>
+        <div class="nav-btn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3"/><path d="M19.43 12.98c.04-.32.07-.64.07-.98 0-.34-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98 0 .33.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+        </div>
+      </div>
+
+      <div class="screen-content">
+
+        <!-- Clipboard detection -->
+        <div class="clipboard-card">
+          <div class="cb-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 2h-4.18C14.4.84 13.3 0 12 0c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V6h10v2z"/></svg>
+          </div>
+          <div class="cb-text">
+            <p class="cb-title">检测到剪贴板内容</p>
+            <p class="cb-desc">HTML · # AI 行业月度报告 2026.05...</p>
+          </div>
+          <span class="cb-chevron">›</span>
+        </div>
+
+        <!-- Recent section -->
+        <div class="section-header">
+          <h2>最近阅读</h2>
+          <span class="clear-btn">清空</span>
+        </div>
+
+        <div class="history-list">
+          <div class="history-item">
+            <div class="file-icon html"></div>
+            <div class="history-meta">
+              <p class="name">Claude 3.5 深度评测报告.html</p>
+              <p class="sub">5 分钟前 · 312 KB</p>
+            </div>
+            <span class="chevron">›</span>
+          </div>
+          <div class="history-item">
+            <div class="file-icon md"></div>
+            <div class="history-meta">
+              <p class="name">产品周会纪要 5.30.md</p>
+              <p class="sub">2 小时前 · 18 KB</p>
+            </div>
+            <span class="chevron">›</span>
+          </div>
+          <div class="history-item">
+            <div class="file-icon html"></div>
+            <div class="history-meta">
+              <p class="name">美股持仓周报 W22.html</p>
+              <p class="sub">昨天 · 156 KB</p>
+            </div>
+            <span class="chevron">›</span>
+          </div>
+          <div class="history-item">
+            <div class="file-icon md"></div>
+            <div class="history-meta">
+              <p class="name">Transformer 论文精读笔记.md</p>
+              <p class="sub">5 月 28 日 · 42 KB</p>
+            </div>
+            <span class="chevron">›</span>
+          </div>
+          <div class="history-item">
+            <div class="file-icon html"></div>
+            <div class="history-meta">
+              <p class="name">iOS 17 设计规范摘要.html</p>
+              <p class="sub">5 月 27 日 · 88 KB</p>
+            </div>
+            <span class="chevron">›</span>
+          </div>
+          <div class="history-item">
+            <div class="file-icon md"></div>
+            <div class="history-meta">
+              <p class="name">RAG 系统架构图解.md</p>
+              <p class="sub">5 月 26 日 · 24 KB</p>
+            </div>
+            <span class="chevron">›</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom action -->
+      <div class="bottom-action">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+        从文件选择
+      </div>
+
+    </div>
+  </div>
+
+  <p style="text-align:center; color: var(--c-fg-tertiary); font-size: 14px; margin-top: 40px;">
+    点击右上角 🌗 切换浅色/暗色模式 · 模拟 iPhone 15 (390 × 844)
+  </p>
+</div>
+
+<script src="../assets/js/shared.js"></script>
+</body>
+</html>

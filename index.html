@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 阅 · 产品原型</title>
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/iphone-frame.css">
+<link rel="stylesheet" href="assets/css/index-page.css">
+<style>
+  .preview-frame {
+    transform: scale(0.85);
+    transform-origin: top center;
+    margin-bottom: -130px;
+  }
+  .preview-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: inherit;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 80px;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .feature-card {
+    padding: 24px;
+    background: var(--c-bg-secondary);
+    border-radius: 16px;
+    border: 1px solid var(--c-separator);
+  }
+  .feature-card .emoji {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .feature-card h4 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+  .feature-card p {
+    font-size: 14px;
+    color: var(--c-fg-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .cta {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--c-accent);
+    color: white;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    margin-top: 24px;
+    transition: transform 0.15s;
+  }
+  .cta:hover { transform: scale(1.05); }
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <div class="page-header">
+    <div class="app-icon">阅</div>
+    <h1 class="page-title">AI 阅 · AIReader</h1>
+    <p class="page-subtitle">移动端 AI 产物专用轻量阅读器</p>
+    <p class="page-tagline">微信收到的 HTML / Markdown，一键打开即得最佳阅读体验</p>
+    <a href="screens/flow.html" class="cta">查看完整用户旅程 →</a>
+  </div>
+
+  <div class="section-divider">
+    <h2>三大核心界面</h2>
+    <p>点击 iPhone 内部分查看交互</p>
+  </div>
+
+  <div class="screens-grid">
+
+    <div class="screen-card">
+      <div class="iphone-frame preview-frame">
+        <div class="iphone-screen no-chrome">
+          <iframe class="preview-iframe" src="screens/home.html#embed" loading="lazy"></iframe>
+        </div>
+      </div>
+      <h3>主界面 HomeView</h3>
+      <p>最近阅读列表 + 剪贴板智能检测 + 一键文件导入。空状态友好。</p>
+      <a href="screens/home.html">独立查看 →</a>
+    </div>
+
+    <div class="screen-card">
+      <div class="iphone-frame preview-frame">
+        <div class="iphone-screen no-chrome">
+          <iframe class="preview-iframe" src="screens/reader.html#embed" loading="lazy"></iframe>
+        </div>
+      </div>
+      <h3>阅读界面 ReaderView</h3>
+      <p>苹方字体 + 合理留白 + 真实 Mermaid / LaTeX / 代码 / 表格渲染。</p>
+      <a href="screens/reader.html">独立查看 →</a>
+    </div>
+
+    <div class="screen-card">
+      <div class="iphone-frame preview-frame">
+        <div class="iphone-screen no-chrome">
+          <iframe class="preview-iframe" src="screens/settings.html#embed" loading="lazy"></iframe>
+        </div>
+      </div>
+      <h3>设置 SettingsView</h3>
+      <p>极简设置项。模式 / 字号 / 联网 / 历史记录管理。</p>
+      <a href="screens/settings.html">独立查看 →</a>
+    </div>
+
+  </div>
+
+  <div class="section-divider">
+    <h2>差异化特性</h2>
+    <p>为 AI 时代的内容传播而生</p>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="emoji">📋</span>
+      <h4>三路文件入口</h4>
+      <p>"用其他应用打开" + 分享菜单 + 剪贴板检测，覆盖所有微信传 HTML/MD 的方式。</p>
+    </div>
+    <div class="feature-card">
+      <span class="emoji">🎨</span>
+      <h4>阅读模式 + 原样模式</h4>
+      <p>默认套用 App 优雅排版（苹方/SF Mono），一键切回原作者样式。</p>
+    </div>
+    <div class="feature-card">
+      <span class="emoji">📊</span>
+      <h4>Mermaid 流程图</h4>
+      <p>AI 常输出 Mermaid 语法，本地渲染流程图、时序图、甘特图。</p>
+    </div>
+    <div class="feature-card">
+      <span class="emoji">∑</span>
+      <h4>LaTeX 数学公式</h4>
+      <p>KaTeX 渲染，行内 / 块级公式一应俱全。理工类报告必备。</p>
+    </div>
+    <div class="feature-card">
+      <span class="emoji">💻</span>
+      <h4>代码语法高亮</h4>
+      <p>30+ 语言支持，浅色/暗色主题自适应。</p>
+    </div>
+    <div class="feature-card">
+      <span class="emoji">📱</span>
+      <h4>响应式表格</h4>
+      <p>宽表格横滑查看，双击展开全屏，移动端阅读不再痛苦。</p>
+    </div>
+    <div class="feature-card">
+      <span class="emoji">🌙</span>
+      <h4>暗色模式</h4>
+      <p>跟随系统切换。深夜阅读护眼。</p>
+    </div>
+    <div class="feature-card">
+      <span class="emoji">🔒</span>
+      <h4>零数据收集</h4>
+      <p>无账号、无统计、无网络上报。App Store 隐私标签全绿。</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>
+      AI 阅 · AIReader · 产品原型 v0.1<br>
+      <a href="https://github.com/yishisanren/aireader-mockup" style="color: var(--c-accent); text-decoration: none;">GitHub</a> ·
+      Spec: <code>2026-05-30-aireader-design.md</code><br>
+      为对应原生 iOS 应用提供像素级参考
+    </p>
+  </div>
+
+</div>
+
+<script src="assets/js/shared.js"></script>
+</body>
+</html>

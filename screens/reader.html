@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 阅 · 阅读界面</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/iphone-frame.css">
+<link rel="stylesheet" href="../assets/css/index-page.css">
+
+<!-- KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters: [{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+
+<!-- highlight.js (full bundle, auto language detection) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/highlight.min.js"></script>
+
+<!-- Mermaid -->
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+<style>
+  /* --- Reader Toolbar --- */
+  .reader-toolbar {
+    padding: 4px 12px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 0.5px solid var(--c-separator);
+    background: var(--c-bg);
+  }
+  .toolbar-left, .toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .toolbar-btn {
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--c-accent);
+    font-size: 17px;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  .toolbar-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: var(--c-accent);
+  }
+  .toolbar-btn.back {
+    font-size: 17px;
+    font-weight: 400;
+    padding-left: 4px;
+  }
+  .toolbar-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--c-fg-primary);
+    text-align: center;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 8px;
+  }
+  .mode-badge {
+    background: var(--c-accent-soft);
+    color: var(--c-accent);
+    padding: 4px 10px;
+    border-radius: var(--r-pill);
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+
+  /* --- Reader Content (Reading Mode) --- */
+  .reader-content {
+    padding: 16px 20px 60px;
+    font-family: var(--font-system);
+    font-size: 17px;
+    line-height: var(--lh-reading);
+    color: var(--c-fg-primary);
+  }
+  .reader-content h1 {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 12px 0 16px;
+    letter-spacing: -0.4px;
+  }
+  .reader-content h2 {
+    font-size: 21px;
+    font-weight: 600;
+    line-height: 1.35;
+    margin: 28px 0 12px;
+    letter-spacing: -0.2px;
+  }
+  .reader-content h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 22px 0 10px;
+  }
+  .reader-content p {
+    margin: 0 0 14px;
+    color: var(--c-fg-primary);
+  }
+  .reader-content .meta {
+    display: flex;
+    gap: 12px;
+    color: var(--c-fg-tertiary);
+    font-size: 13px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 0.5px solid var(--c-separator);
+  }
+  .reader-content strong { font-weight: 600; }
+  .reader-content em { color: var(--c-fg-secondary); }
+
+  /* Code blocks */
+  .reader-content pre {
+    background: var(--c-bg-secondary);
+    border-radius: var(--r-sm);
+    padding: 12px 14px;
+    overflow-x: auto;
+    margin: 16px -4px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .reader-content code:not(pre code) {
+    font-family: var(--font-mono);
+    background: var(--c-bg-secondary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.88em;
+  }
+
+  /* Tables */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 16px -20px;
+    padding: 0 20px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .reader-content table {
+    border-collapse: collapse;
+    font-size: 14px;
+    min-width: 100%;
+  }
+  .reader-content th, .reader-content td {
+    padding: 8px 12px;
+    border: 0.5px solid var(--c-separator);
+    text-align: left;
+    white-space: nowrap;
+  }
+  .reader-content th {
+    background: var(--c-bg-secondary);
+    font-weight: 600;
+  }
+
+  /* Mermaid */
+  .mermaid {
+    background: var(--c-bg-secondary);
+    border-radius: var(--r-sm);
+    padding: 12px;
+    margin: 16px -4px;
+    text-align: center;
+    overflow-x: auto;
+  }
+  .mermaid svg { max-width: 100%; height: auto; }
+
+  /* Math */
+  .reader-content .katex-display {
+    margin: 14px 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 0;
+  }
+  .reader-content .katex { font-size: 1.05em; }
+
+  /* Highlight */
+  .highlight-tag {
+    display: inline-block;
+    background: linear-gradient(180deg, transparent 60%, rgba(255, 235, 59, 0.4) 60%);
+    padding: 0 2px;
+  }
+  [data-theme="dark"] .highlight-tag {
+    background: linear-gradient(180deg, transparent 60%, rgba(255, 235, 59, 0.25) 60%);
+  }
+
+  /* Progress bar */
+  .reading-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 47%;
+    background: var(--c-accent);
+    z-index: 50;
+  }
+
+  .screen-content { padding-top: 0; }
+</style>
+</head>
+<body>
+
+<div class="page-wrap" style="padding-top: 40px;">
+  <div style="text-align:center; margin-bottom: 30px;">
+    <a href="../index.html" style="color: var(--c-accent); text-decoration:none; font-size:15px;">← 返回索引</a>
+    <h2 style="margin: 16px 0 4px; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">阅读界面 / ReaderView</h2>
+    <p style="color: var(--c-fg-secondary); margin: 0;">AI 产物高质量渲染 · Mermaid + LaTeX + 代码 + 表格</p>
+  </div>
+
+  <div class="iphone-frame">
+    <div class="iphone-screen">
+
+      <!-- Toolbar (sits below status bar) -->
+      <div style="height: 54px; flex-shrink: 0;"></div>
+      <div class="reader-toolbar">
+        <div class="toolbar-left">
+          <div class="toolbar-btn back">‹ 返回</div>
+        </div>
+        <div class="toolbar-title">Claude 3.5 深度评测<span class="mode-badge">阅读</span></div>
+        <div class="toolbar-right">
+          <div class="toolbar-btn">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 11.75c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm6 0c-.69 0-1.25.56-1.25 1.25s.56 1.25 1.25 1.25 1.25-.56 1.25-1.25-.56-1.25-1.25-1.25zm-3-9C6.48 2.75 2 7.23 2 12.75s4.48 10 10 10 10-4.48 10-10-4.48-10-10-10zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-13c-2.33 0-4.32 1.45-5.12 3.5h1.67c.69-1.19 1.97-2 3.45-2s2.75.81 3.45 2h1.67c-.8-2.05-2.79-3.5-5.12-3.5z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="screen-content">
+        <div class="reader-content">
+
+          <h1>Claude 3.5 Sonnet 深度评测报告</h1>
+          <div class="meta">
+            <span>📅 2026.05.30</span>
+            <span>⏱ 8 分钟</span>
+            <span>📊 2,140 字</span>
+          </div>
+
+          <p>本报告对 <strong>Claude 3.5 Sonnet</strong> 在中文推理、代码生成、长文本理解三大维度做<span class="highlight-tag">系统性评测</span>，覆盖 12 个公开 benchmark 和 50 个真实业务场景测试。</p>
+
+          <h2>1. 核心指标对比</h2>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>模型</th><th>MMLU</th><th>HumanEval</th><th>MATH</th><th>中文 C-Eval</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Claude 3.5 Sonnet</td><td><strong>88.7</strong></td><td><strong>92.0</strong></td><td>71.1</td><td>82.4</td></tr>
+                <tr><td>GPT-4o</td><td>88.7</td><td>90.2</td><td>76.6</td><td>81.0</td></tr>
+                <tr><td>Gemini 1.5 Pro</td><td>85.9</td><td>84.1</td><td>67.7</td><td>78.9</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>2. 推理链路示意</h2>
+
+          <div class="mermaid" id="mermaid-flow"></div>
+
+          <h2>3. 数学能力示例</h2>
+
+          <p>在 GSM8K 测试中，模型对以下方程的求解准确率为 <strong>96.2%</strong>：</p>
+
+          <p>$$\frac{\partial L}{\partial \theta} = -\frac{1}{N}\sum_{i=1}^{N}\left[y_i \log p_\theta(x_i) + (1-y_i)\log(1-p_\theta(x_i))\right]$$</p>
+
+          <p>对于二次方程 $ax^2 + bx + c = 0$，求根公式 $x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$ 的推导过程，模型能正确给出 7 步完整推导。</p>
+
+          <h2>4. 代码生成实测</h2>
+
+          <p>以下是模型生成的 Swift 代码示例（一次通过率 <strong>89%</strong>）：</p>
+
+          <pre><code class="language-swift">struct ReaderView: View {
+    @State private var fontSize: CGFloat = 17
+    @Environment(\.colorScheme) var scheme
+
+    var body: some View {
+        ScrollView {
+            WebViewWrapper(html: content)
+                .frame(minHeight: 600)
+        }
+        .toolbar {
+            ToolbarItem { fontSizeMenu }
+        }
+    }
+}</code></pre>
+
+          <h2>5. 结论</h2>
+
+          <p>Claude 3.5 Sonnet 在<span class="highlight-tag">代码生成</span>和<span class="highlight-tag">中文理解</span>方面表现最强，适合作为 <em>编程助手</em> 与 <em>内容创作</em> 的主力模型。在严格数学推理上仍略逊 GPT-4o。</p>
+
+          <p style="color: var(--c-fg-tertiary); font-size: 14px; margin-top: 32px; padding-top: 16px; border-top: 0.5px solid var(--c-separator);">— 报告由 AI 阅自动渲染 · 阅读模式</p>
+
+        </div>
+      </div>
+
+      <div class="reading-progress"></div>
+
+    </div>
+  </div>
+
+  <p style="text-align:center; color: var(--c-fg-tertiary); font-size: 14px; margin-top: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+    上方 iPhone 内的渲染为 <strong>真实执行</strong>：表格响应式横滑、Mermaid 流程图实时绘制、LaTeX 公式 KaTeX 渲染、Swift 代码 highlight.js 高亮。<br>
+    这正是 v1 App 运行时 WKWebView 内会看到的效果。
+  </p>
+</div>
+
+<script src="../assets/js/shared.js"></script>
+<script>
+  // Mermaid 源码
+  const MERMAID_SRC = `flowchart LR
+    A[用户输入] --> B{意图分类}
+    B -->|代码| C[Code 模块]
+    B -->|推理| D[CoT 引擎]
+    B -->|检索| E[RAG 调用]
+    C --> F[输出]
+    D --> F
+    E --> F`;
+
+  async function waitForLib(name, maxWait = 5000) {
+    const start = Date.now();
+    while (!window[name] && Date.now() - start < maxWait) {
+      await new Promise(r => setTimeout(r, 50));
+    }
+    return !!window[name];
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    // highlight.js
+    if (await waitForLib('hljs')) {
+      hljs.highlightAll();
+    }
+
+    // mermaid 用 render API 渲染（避免 textContent 中 `-->` 被 HTML 实体化）
+    if (await waitForLib('mermaid')) {
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default',
+        fontFamily: 'var(--font-system)',
+        flowchart: { curve: 'basis' },
+        securityLevel: 'loose'
+      });
+      try {
+        const { svg } = await mermaid.render('mermaid-svg-1', MERMAID_SRC);
+        const target = document.getElementById('mermaid-flow');
+        if (target) target.innerHTML = svg;
+      } catch (e) {
+        console.error('mermaid render error:', e);
+      }
+    }
+  });
+</script>
+</body>
+</html>
