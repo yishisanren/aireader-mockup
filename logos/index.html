@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 轻阅 · Logo 设计对比</title>
+<style>
+  /* ============================================
+     Logo 评审页 - 4 个方向 × 3 尺寸 × 亮暗
+     ============================================ */
+
+  :root {
+    --c-cream: #FAF7F0;
+    --c-cream-dark: #F0E9DA;
+    --c-coral: #D97757;
+    --c-burnt: #B8542A;
+    --c-slate: #2C2825;
+    --c-text: #2C2825;
+    --c-text-soft: #5A5550;
+  }
+
+  * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(180deg, #FAF7F0 0%, #F0E9DA 100%);
+    color: var(--c-text);
+    min-height: 100vh;
+  }
+
+  .wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 60px 32px 120px;
+  }
+
+  /* Header */
+  .page-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .page-header .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--c-coral);
+    color: var(--c-cream);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .page-header h1 {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin: 0 0 12px;
+    color: var(--c-slate);
+  }
+  .page-header p {
+    font-size: 17px;
+    color: var(--c-text-soft);
+    margin: 0;
+    line-height: 1.6;
+  }
+  .page-header a {
+    color: var(--c-burnt);
+    text-decoration: none;
+    margin-top: 16px;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  /* Section divider */
+  .section-title {
+    margin: 100px 0 30px;
+    text-align: center;
+  }
+  .section-title h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+  }
+  .section-title p {
+    color: var(--c-text-soft);
+    font-size: 15px;
+    margin: 0;
+  }
+
+  /* Card grid */
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+  @media (max-width: 1100px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .grid-4 { grid-template-columns: 1fr; } }
+
+  .logo-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(60, 40, 30, 0.08);
+    border: 1px solid rgba(60, 40, 30, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .logo-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(60, 40, 30, 0.12);
+  }
+
+  .logo-preview {
+    aspect-ratio: 1;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .logo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .logo-meta {
+    padding: 16px 20px 20px;
+    border-top: 1px solid rgba(60, 40, 30, 0.08);
+  }
+  .logo-meta .key {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--c-coral);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+  .logo-meta .name {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    color: var(--c-slate);
+  }
+  .logo-meta .desc {
+    font-size: 13px;
+    color: var(--c-text-soft);
+    margin: 0;
+    line-height: 1.5;
+  }
+  .logo-meta .score {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(60, 40, 30, 0.15);
+    font-size: 12px;
+    color: var(--c-text-soft);
+  }
+  .logo-meta .score strong { color: var(--c-coral); font-size: 14px; }
+
+  /* Size comparison */
+  .size-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 32px;
+    padding: 32px 24px;
+    background: white;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 24px rgba(60, 40, 30, 0.08);
+  }
+  .size-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .size-item .img {
+    border-radius: 22%;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .size-item .img img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .size-item .label {
+    font-size: 11px;
+    color: var(--c-text-soft);
+    font-weight: 500;
+  }
+
+  /* iPhone homescreen mockup */
+  .home-screen {
+    width: 360px;
+    aspect-ratio: 9 / 19.5;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(217, 119, 87, 0.25) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(184, 84, 42, 0.2) 0%, transparent 50%),
+      linear-gradient(135deg, #2C2825 0%, #1A1714 100%);
+    border-radius: 42px;
+    padding: 16px 12px 24px;
+    margin: 0 auto;
+    box-shadow:
+      0 0 0 12px #0e0e10,
+      0 30px 80px -20px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .home-screen::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 28px;
+    background: #000;
+    border-radius: 999px;
+    z-index: 5;
+  }
+  .home-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 24px 28px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .home-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px 12px;
+    padding: 12px 8px;
+  }
+  .home-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .home-app .ic {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .home-app .ic img { width: 100%; height: 100%; display: block; }
+  .home-app .ic.placeholder {
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(4px);
+  }
+  .home-app .nm {
+    color: white;
+    font-size: 11px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+  .home-app.ours .nm { font-weight: 700; }
+
+  /* Dock */
+  .home-dock {
+    position: absolute;
+    bottom: 24px;
+    left: 16px;
+    right: 16px;
+    height: 80px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 16px;
+  }
+  .home-dock .ic {
+    width: 56px;
+    height: 56px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 100%);
+  }
+
+  /* iPhone wall */
+  .iphone-wall {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 40px;
+  }
+  @media (max-width: 1200px) { .iphone-wall { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 700px) { .iphone-wall { grid-template-columns: 1fr; } }
+  .iphone-col {
+    text-align: center;
+  }
+  .iphone-col .label {
+    margin: 16px 0 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--c-slate);
+  }
+  .iphone-col .home-screen { transform: scale(0.75); transform-origin: top center; margin-bottom: -200px; }
+
+  /* Decision section */
+  .decision-box {
+    margin-top: 100px;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    border-left: 6px solid var(--c-coral);
+    box-shadow: 0 4px 24px rgba(60, 40, 30, 0.08);
+  }
+  .decision-box h3 {
+    margin: 0 0 16px;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .decision-box .questions {
+    display: grid;
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .decision-box .q {
+    padding: 16px 20px;
+    background: var(--c-cream);
+    border-radius: 12px;
+    font-size: 15px;
+  }
+  .decision-box .q b { color: var(--c-coral); }
+
+  /* Palette swatch */
+  .palette {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  @media (max-width: 700px) { .palette { grid-template-columns: repeat(2, 1fr); } }
+  .swatch {
+    aspect-ratio: 1;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 16px;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  }
+  .swatch.cream { background: linear-gradient(135deg, #FAF7F0 0%, #F0E9DA 100%); color: var(--c-slate); }
+  .swatch.coral { background: linear-gradient(135deg, #E08866 0%, #D97757 100%); }
+  .swatch.burnt { background: linear-gradient(135deg, #C46A3C 0%, #B8542A 100%); }
+  .swatch.slate { background: linear-gradient(135deg, #3D2E1F 0%, #2C2825 100%); }
+  .swatch code {
+    display: block;
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 11px;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="page-header">
+    <div class="badge">Logo Concept Review · v2</div>
+    <h1>AI 轻阅 · Logo 设计</h1>
+    <p>4 个方向并行 · Claude 橘黄 / 杂志暖色系 · 米色背景</p>
+    <a href="../index.html">← 返回项目原型</a>
+  </div>
+
+  <!-- 调色板 -->
+  <div class="section-title">
+    <h2>品牌色彩系统</h2>
+    <p>借鉴 Claude 官方品牌色 + 杂志印刷品质感</p>
+  </div>
+  <div class="palette">
+    <div class="swatch cream">Cream<code>#FAF7F0</code></div>
+    <div class="swatch coral">Coral<code>#D97757</code></div>
+    <div class="swatch burnt">Burnt Sienna<code>#B8542A</code></div>
+    <div class="swatch slate">Slate<code>#2C2825</code></div>
+  </div>
+
+  <!-- 4 个方向主对比 -->
+  <div class="section-title">
+    <h2>4 个设计方向</h2>
+    <p>1024 × 1024 高清呈现 · 视觉评审反馈打分</p>
+  </div>
+
+  <div class="grid-4">
+
+    <div class="logo-card">
+      <div class="logo-preview"><img src="logo-a.svg" alt="Logo A"></div>
+      <div class="logo-meta">
+        <div class="key">方向 A</div>
+        <h4 class="name">翻开的书与光</h4>
+        <p class="desc">纯图形路线 · 双页展开 + 顶部光晕 · 经典阅读符号</p>
+        <div class="score">视觉评分 <strong>6 / 10</strong> · 安全稳妥</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-preview"><img src="logo-b.svg" alt="Logo B"></div>
+      <div class="logo-meta">
+        <div class="key">方向 B</div>
+        <h4 class="name">阅字印章</h4>
+        <p class="desc">含字路线 · 真"阅"字 + 圆形橘色印章 · 中文用户秒懂</p>
+        <div class="score">视觉评分 <strong>7 / 10</strong> · 国民辨识度</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-preview"><img src="logo-c.svg" alt="Logo C"></div>
+      <div class="logo-meta">
+        <div class="key">方向 C</div>
+        <h4 class="name">衬线 Q 印章</h4>
+        <p class="desc">字母路线 · Georgia 斜体 Q + 杂志徽章 · 国际化气质</p>
+        <div class="score">视觉评分 <strong>8.8 / 10</strong> · ⭐ 最高分</div>
+      </div>
+    </div>
+
+    <div class="logo-card">
+      <div class="logo-preview"><img src="logo-d.svg" alt="Logo D"></div>
+      <div class="logo-meta">
+        <div class="key">方向 D</div>
+        <h4 class="name">柔光照纸</h4>
+        <p class="desc">叙事路线 · 光从右上照在文档上 · AI 内容被点亮的隐喻</p>
+        <div class="score">视觉评分 <strong>6 / 10</strong> · 高级但需细抠</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 三尺寸缩放对比 -->
+  <div class="section-title">
+    <h2>三尺寸缩放表现</h2>
+    <p>验证 logo 在 App Store / 主屏 / 列表三种场景下的退化情况</p>
+  </div>
+
+  <div class="size-row">
+    <div class="size-item">
+      <div class="img" style="width: 160px; height: 160px;"><img src="logo-a.svg"></div>
+      <div class="label">A · 160px</div>
+    </div>
+    <div class="size-item">
+      <div class="img" style="width: 90px; height: 90px;"><img src="logo-a.svg"></div>
+      <div class="label">A · 90px</div>
+    </div>
+    <div class="size-item">
+      <div class="img" style="width: 48px; height: 48px;"><img src="logo-a.svg"></div>
+      <div class="label">A · 48px</div>
+    </div>
+  </div>
+
+  <div class="size-row">
+    <div class="size-item">
+      <div class="img" style="width: 160px; height: 160px;"><img src="logo-b.svg"></div>
+      <div class="label">B · 160px</div>
+    </div>
+    <div class="size-item">
+      <div class="img" style="width: 90px; height: 90px;"><img src="logo-b.svg"></div>
+      <div class="label">B · 90px</div>
+    </div>
+    <div class="size-item">
+      <div class="img" style="width: 48px; height: 48px;"><img src="logo-b.svg"></div>
+      <div class="label">B · 48px</div>
+    </div>
+  </div>
+
+  <div class="size-row">
+    <div class="size-item">
+      <div class="img" style="width: 160px; height: 160px;"><img src="logo-c.svg"></div>
+      <div class="label">C · 160px</div>
+    </div>
+    <div class="size-item">
+      <div class="img" style="width: 90px; height: 90px;"><img src="logo-c.svg"></div>
+      <div class="label">C · 90px</div>
+    </div>
+    <div class="size-item">
+      <div class="img" style="width: 48px; height: 48px;"><img src="logo-c.svg"></div>
+      <div class="label">C · 48px</div>
+    </div>
+  </div>
+
+  <div class="size-row">
+    <div class="size-item">
+      <div class="img" style="width: 160px; height: 160px;"><img src="logo-d.svg"></div>
+      <div class="label">D · 160px</div>
+    </div>
+    <div class="size-item">
+      <div class="img" style="width: 90px; height: 90px;"><img src="logo-d.svg"></div>
+      <div class="label">D · 90px</div>
+    </div>
+    <div class="size-item">
+      <div class="img" style="width: 48px; height: 48px;"><img src="logo-d.svg"></div>
+      <div class="label">D · 48px</div>
+    </div>
+  </div>
+
+  <!-- iPhone 主屏实景 -->
+  <div class="section-title">
+    <h2>iPhone 主屏实景</h2>
+    <p>模拟 4 个 logo 放在真实 iPhone 主屏的视觉效果</p>
+  </div>
+
+  <div class="iphone-wall">
+
+    <div class="iphone-col">
+      <div class="home-screen">
+        <div class="home-status"><span>9:41</span><span>•••</span></div>
+        <div class="home-grid">
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">微信</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">Safari</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">备忘录</div></div>
+          <div class="home-app ours"><div class="ic"><img src="logo-a.svg"></div><div class="nm">AI 轻阅</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">相机</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">日历</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">设置</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">音乐</div></div>
+        </div>
+        <div class="home-dock">
+          <div class="ic"></div><div class="ic"></div><div class="ic"></div><div class="ic"></div>
+        </div>
+      </div>
+      <p class="label">方向 A</p>
+    </div>
+
+    <div class="iphone-col">
+      <div class="home-screen">
+        <div class="home-status"><span>9:41</span><span>•••</span></div>
+        <div class="home-grid">
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">微信</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">Safari</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">备忘录</div></div>
+          <div class="home-app ours"><div class="ic"><img src="logo-b.svg"></div><div class="nm">AI 轻阅</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">相机</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">日历</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">设置</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">音乐</div></div>
+        </div>
+        <div class="home-dock">
+          <div class="ic"></div><div class="ic"></div><div class="ic"></div><div class="ic"></div>
+        </div>
+      </div>
+      <p class="label">方向 B</p>
+    </div>
+
+    <div class="iphone-col">
+      <div class="home-screen">
+        <div class="home-status"><span>9:41</span><span>•••</span></div>
+        <div class="home-grid">
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">微信</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">Safari</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">备忘录</div></div>
+          <div class="home-app ours"><div class="ic"><img src="logo-c.svg"></div><div class="nm">AI 轻阅</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">相机</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">日历</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">设置</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">音乐</div></div>
+        </div>
+        <div class="home-dock">
+          <div class="ic"></div><div class="ic"></div><div class="ic"></div><div class="ic"></div>
+        </div>
+      </div>
+      <p class="label">方向 C ⭐</p>
+    </div>
+
+    <div class="iphone-col">
+      <div class="home-screen">
+        <div class="home-status"><span>9:41</span><span>•••</span></div>
+        <div class="home-grid">
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">微信</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">Safari</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">备忘录</div></div>
+          <div class="home-app ours"><div class="ic"><img src="logo-d.svg"></div><div class="nm">AI 轻阅</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">相机</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">日历</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">设置</div></div>
+          <div class="home-app"><div class="ic placeholder"></div><div class="nm">音乐</div></div>
+        </div>
+        <div class="home-dock">
+          <div class="ic"></div><div class="ic"></div><div class="ic"></div><div class="ic"></div>
+        </div>
+      </div>
+      <p class="label">方向 D</p>
+    </div>
+
+  </div>
+
+  <!-- 决策框 -->
+  <div class="decision-box">
+    <h3>🎯 接下来怎么选</h3>
+    <p style="color: var(--c-text-soft); line-height: 1.7; margin: 0 0 12px;">
+      4 个方向对应不同的品牌战略路径。打分仅供参考——<strong>真正决定的是你对 AI 轻阅的品牌叙事方向</strong>。
+    </p>
+
+    <div class="questions">
+      <div class="q"><b>方向 A · 翻开的书</b> · 选这个 = "我要做经典阅读类 App，国民辨识度优先"</div>
+      <div class="q"><b>方向 B · 阅字印章</b> · 选这个 = "中文用户是主战场，要瞬间理解"</div>
+      <div class="q"><b>方向 C · 衬线 Q 印章</b> · 选这个 = "走出版物 / 杂志 / 国际化路线，长期看 = Monocle 气质"</div>
+      <div class="q"><b>方向 D · 柔光照纸</b> · 选这个 = "概念叙事优先，'AI 让内容被点亮'是核心隐喻"</div>
+    </div>
+
+    <p style="margin-top: 20px; color: var(--c-text-soft); font-size: 14px; line-height: 1.7;">
+      <strong>我的建议</strong>：方向 C 视觉完成度最高，且杂志气质完美对应你"轻阅 = 慢、专注、有品味"的产品定位。但如果你希望中文用户秒懂，方向 B 是稳妥选择。直接回复 A/B/C/D 即可。
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>

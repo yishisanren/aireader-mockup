@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="AI 轻阅 Logo A - 翻开的书与光">
+  <!-- ============================================
+       方向 A · 翻开的书与光（v2 - 修复"悲伤脸"误读）
+       一本翻开的书的剪影 + 顶部光点
+       开口向上 → 不再像 emoji
+       ============================================ -->
+
+  <defs>
+    <!-- 米色背景渐变 -->
+    <linearGradient id="bgA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF7F0"/>
+      <stop offset="1" stop-color="#F0E9DA"/>
+    </linearGradient>
+
+    <!-- 书页渐变 -->
+    <linearGradient id="pageGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D97757"/>
+      <stop offset="1" stop-color="#B8542A"/>
+    </linearGradient>
+
+    <!-- 光晕 -->
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#E08866" stop-opacity="0.9"/>
+      <stop offset="0.4" stop-color="#D97757" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#D97757" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- 阴影 -->
+    <filter id="softA" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14"/>
+      <feOffset dx="0" dy="14"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <pattern id="paperA" x="0" y="0" width="3" height="3" patternUnits="userSpaceOnUse">
+      <circle cx="0.5" cy="0.5" r="0.3" fill="#2C2825"/>
+    </pattern>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bgA)"/>
+  <rect width="1024" height="1024" fill="url(#paperA)" opacity="0.06"/>
+
+  <!-- 顶部光晕（明显在书的正上方）-->
+  <circle cx="512" cy="320" r="180" fill="url(#halo)"/>
+  <circle cx="512" cy="320" r="60" fill="#E08866" opacity="0.6"/>
+  <circle cx="512" cy="320" r="22" fill="#FAF7F0"/>
+
+  <!-- 翻开的书（核心图形）-->
+  <!-- 整体居中略偏下，开口向上 -->
+  <g filter="url(#softA)" transform="translate(512, 640)">
+
+    <!-- 左页（橘红，斜向右下）-->
+    <path d="M -300 -40
+             L -16 -120
+             L -16 140
+             L -300 220
+             Z"
+          fill="url(#pageGrad)"/>
+
+    <!-- 右页（橘红，斜向左下）-->
+    <path d="M 300 -40
+             L 16 -120
+             L 16 140
+             L 300 220
+             Z"
+          fill="url(#pageGrad)"/>
+
+    <!-- 书脊（中央深色）-->
+    <rect x="-16" y="-120" width="32" height="260" fill="#2C2825"/>
+
+    <!-- 左页文字线条（暗示内容）-->
+    <g fill="#FAF7F0" opacity="0.75">
+      <rect x="-260" y="-55" width="200" height="8" rx="4"/>
+      <rect x="-260" y="-30" width="180" height="8" rx="4"/>
+      <rect x="-260" y="-5" width="200" height="8" rx="4"/>
+      <rect x="-260" y="20" width="150" height="8" rx="4"/>
+      <rect x="-260" y="45" width="200" height="8" rx="4"/>
+      <rect x="-260" y="70" width="180" height="8" rx="4"/>
+    </g>
+
+    <!-- 右页文字线条 -->
+    <g fill="#FAF7F0" opacity="0.75">
+      <rect x="60" y="-55" width="200" height="8" rx="4"/>
+      <rect x="60" y="-30" width="180" height="8" rx="4"/>
+      <rect x="60" y="-5" width="200" height="8" rx="4"/>
+      <rect x="60" y="20" width="160" height="8" rx="4"/>
+      <rect x="60" y="45" width="200" height="8" rx="4"/>
+      <rect x="60" y="70" width="180" height="8" rx="4"/>
+    </g>
+
+  </g>
+
+</svg>

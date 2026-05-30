@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="AI 轻阅 Logo D - 柔光照纸（v2）">
+  <!-- ============================================
+       方向 D · 柔光照纸（v2 - 删掉廉价光束，强化对比）
+       右上角柔和光晕 → 自然渐变 → 卡片倾斜
+       光照亮的位置在卡片右上，逻辑成立
+       ============================================ -->
+
+  <defs>
+    <!-- 米色背景：从右上的明 → 左下的暗 -->
+    <radialGradient id="bgD2" cx="0.85" cy="0.15" r="1.1">
+      <stop offset="0" stop-color="#FFE4D0"/>
+      <stop offset="0.3" stop-color="#FAF7F0"/>
+      <stop offset="1" stop-color="#E8DFCC"/>
+    </radialGradient>
+
+    <!-- 纸张：白色到米白渐变 -->
+    <linearGradient id="paperD2" x1="0.3" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FAF7F0"/>
+    </linearGradient>
+
+    <!-- 右上光晕 -->
+    <radialGradient id="sunD" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFB89A" stop-opacity="1"/>
+      <stop offset="0.3" stop-color="#E08866" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#D97757" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- 卡片阴影 -->
+    <filter id="shadowD2" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="28"/>
+      <feOffset dx="10" dy="30"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- 卡片表面高光（右上被光照亮，更亮）-->
+    <linearGradient id="paperHighlight" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE4D0" stop-opacity="0.85"/>
+      <stop offset="0.4" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1024" height="1024" fill="url(#bgD2)"/>
+
+  <!-- 右上光晕（柔和、扩散）-->
+  <circle cx="870" cy="180" r="320" fill="url(#sunD)"/>
+  <circle cx="870" cy="180" r="80" fill="#FFE4D0" opacity="0.85"/>
+  <circle cx="870" cy="180" r="32" fill="#FFFFFF"/>
+
+  <!-- 纸张（白色卡片，向右上微微倾斜）-->
+  <g transform="translate(480, 580) rotate(-8)" filter="url(#shadowD2)">
+
+    <!-- 纸张主体 -->
+    <rect x="-270" y="-360" width="540" height="700" rx="16" fill="url(#paperD2)"/>
+
+    <!-- 纸张右上的"光照亮"高光叠加 -->
+    <rect x="-270" y="-360" width="540" height="700" rx="16" fill="url(#paperHighlight)"/>
+
+    <!-- 标题行（被光照亮，橘色突出）-->
+    <g fill="#D97757">
+      <rect x="-210" y="-270" width="400" height="22" rx="4"/>
+      <rect x="-210" y="-230" width="280" height="22" rx="4" opacity="0.7"/>
+    </g>
+
+    <!-- 副标题分隔线 -->
+    <line x1="-210" y1="-170" x2="190" y2="-170" stroke="#D97757" stroke-width="2" opacity="0.4"/>
+
+    <!-- 内容线条（普通黑色文字感）-->
+    <g fill="#2C2825" opacity="0.55">
+      <rect x="-210" y="-130" width="420" height="11" rx="2"/>
+      <rect x="-210" y="-100" width="380" height="11" rx="2"/>
+      <rect x="-210" y="-70" width="400" height="11" rx="2"/>
+      <rect x="-210" y="-40" width="300" height="11" rx="2"/>
+
+      <rect x="-210" y="20" width="420" height="11" rx="2"/>
+      <rect x="-210" y="50" width="380" height="11" rx="2"/>
+      <rect x="-210" y="80" width="350" height="11" rx="2"/>
+      <rect x="-210" y="110" width="400" height="11" rx="2"/>
+      <rect x="-210" y="140" width="280" height="11" rx="2"/>
+
+      <rect x="-210" y="200" width="420" height="11" rx="2"/>
+      <rect x="-210" y="230" width="380" height="11" rx="2"/>
+      <rect x="-210" y="260" width="320" height="11" rx="2"/>
+    </g>
+
+  </g>
+
+</svg>
