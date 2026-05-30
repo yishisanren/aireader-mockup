@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 轻阅 · Q 印章副文本对比</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+    background: #FAF7F0;
+    color: #2C2825;
+    padding: 20px 16px 60px;
+    line-height: 1.6;
+  }
+  h1 {
+    font-size: 22px;
+    margin-bottom: 4px;
+    color: #2C2825;
+  }
+  .sub {
+    font-size: 13px;
+    color: #8B7E6E;
+    margin-bottom: 28px;
+  }
+  .variant {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 16px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(180, 100, 60, 0.08);
+  }
+  .variant-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #F0E9DA;
+  }
+  .variant-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #D97757;
+  }
+  .variant-score {
+    font-size: 13px;
+    color: #8B7E6E;
+  }
+  .logo-large {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto 16px;
+    display: block;
+  }
+  .logo-large img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .meaning {
+    background: #FAF7F0;
+    border-left: 3px solid #D97757;
+    padding: 10px 14px;
+    margin: 12px 0;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #5C544A;
+  }
+  .meaning b { color: #B8542A; }
+  .sizes {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed #E0D5C0;
+  }
+  .size-cell {
+    text-align: center;
+  }
+  .size-cell img {
+    display: block;
+    margin: 0 auto 6px;
+  }
+  .size-160 img { width: 120px; height: 120px; border-radius: 26px; }
+  .size-90 img { width: 80px; height: 80px; border-radius: 18px; }
+  .size-48 img { width: 48px; height: 48px; border-radius: 11px; }
+  .size-label {
+    font-size: 10px;
+    color: #8B7E6E;
+  }
+  .decision {
+    background: linear-gradient(135deg, #D97757 0%, #B8542A 100%);
+    color: #fff;
+    padding: 18px 16px;
+    border-radius: 14px;
+    margin-top: 16px;
+  }
+  .decision h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .decision p {
+    font-size: 13px;
+    opacity: 0.95;
+    line-height: 1.7;
+  }
+  .original-link {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #8B7E6E;
+    text-decoration: underline;
+  }
+</style>
+</head>
+<body>
+
+<h1>Q 印章副文本对比</h1>
+<p class="sub">原版底部是 <code>EST · 2026</code>，替换为能解释 "Q" 含义的英文副文本。<br>
+4 个候选 · 在 iPhone 上从上到下滑动对比 · 选定后回复编号</p>
+
+<!-- V1 -->
+<div class="variant">
+  <div class="variant-header">
+    <span class="variant-name">V1 · 三重含义</span>
+    <span class="variant-score">7.5 / 10</span>
+  </div>
+  <div class="logo-large"><img src="logo-c-v1.svg" alt="V1"></div>
+  <div class="meaning">
+    <b>QUIET · QUICK · QING</b><br>
+    一次性把 Q 的三层含义全部铺开：安静、快速、"轻"的拼音。<br>
+    <b>优点</b>：语义最完整。<br>
+    <b>缺点</b>：信息量大，1024 大图清晰，缩小后字会糊。
+  </div>
+  <div class="sizes">
+    <div class="size-cell size-160"><img src="logo-c-v1.svg"><div class="size-label">120px</div></div>
+    <div class="size-cell size-90"><img src="logo-c-v1.svg"><div class="size-label">80px</div></div>
+    <div class="size-cell size-48"><img src="logo-c-v1.svg"><div class="size-label">48px</div></div>
+  </div>
+</div>
+
+<!-- V2 -->
+<div class="variant">
+  <div class="variant-header">
+    <span class="variant-name">V2 · Quiet Reading</span>
+    <span class="variant-score">8.5 / 10</span>
+  </div>
+  <div class="logo-large"><img src="logo-c-v2.svg" alt="V2"></div>
+  <div class="meaning">
+    <b>QUIET READING</b><br>
+    只说一件事：这是一个"安静阅读"的工具。<br>
+    <b>优点</b>：留白足，缩小后依然清晰；产品主张直接传达。<br>
+    <b>缺点</b>：没有显式说"Q = Quiet"，要看的人自己悟。
+  </div>
+  <div class="sizes">
+    <div class="size-cell size-160"><img src="logo-c-v2.svg"><div class="size-label">120px</div></div>
+    <div class="size-cell size-90"><img src="logo-c-v2.svg"><div class="size-label">80px</div></div>
+    <div class="size-cell size-48"><img src="logo-c-v2.svg"><div class="size-label">48px</div></div>
+  </div>
+</div>
+
+<!-- V3 -->
+<div class="variant">
+  <div class="variant-header">
+    <span class="variant-name">V3 · 中英双语</span>
+    <span class="variant-score">8.5 / 10</span>
+  </div>
+  <div class="logo-large"><img src="logo-c-v3.svg" alt="V3"></div>
+  <div class="meaning">
+    <b>QUIET · QING · 轻</b><br>
+    中英拼音三段式：把 Q 同时绑定到 Quiet（英文）+ Qing（拼音）+ 轻（中文）。<br>
+    <b>优点</b>：中文用户也能秒懂"Q 就是轻"。<br>
+    <b>缺点</b>：中文字"轻"和西文混排在弧线上略显不齐。
+  </div>
+  <div class="sizes">
+    <div class="size-cell size-160"><img src="logo-c-v3.svg"><div class="size-label">120px</div></div>
+    <div class="size-cell size-90"><img src="logo-c-v3.svg"><div class="size-label">80px</div></div>
+    <div class="size-cell size-48"><img src="logo-c-v3.svg"><div class="size-label">48px</div></div>
+  </div>
+</div>
+
+<!-- V4 -->
+<div class="variant">
+  <div class="variant-header">
+    <span class="variant-name">V4 · Q · Quiet Reading ⭐</span>
+    <span class="variant-score">9 / 10</span>
+  </div>
+  <div class="logo-large"><img src="logo-c-v4.svg" alt="V4"></div>
+  <div class="meaning">
+    <b>Q · QUIET READING</b><br>
+    最直接的解释方式：副文本第一个字母就是 Q，明示"Q = Quiet Reading"。<br>
+    <b>优点</b>：语义最清晰，看一眼就懂；中英用户都不需要被额外教育。<br>
+    <b>缺点</b>：信息略冗余（Q 既在中心也在副文本里）。
+  </div>
+  <div class="sizes">
+    <div class="size-cell size-160"><img src="logo-c-v4.svg"><div class="size-label">120px</div></div>
+    <div class="size-cell size-90"><img src="logo-c-v4.svg"><div class="size-label">80px</div></div>
+    <div class="size-cell size-48"><img src="logo-c-v4.svg"><div class="size-label">48px</div></div>
+  </div>
+</div>
+
+<div class="decision">
+  <h3>📋 决策建议</h3>
+  <p>
+    <b>追求语义自解释</b> → V4（推荐）<br>
+    <b>追求克制留白</b> → V2<br>
+    <b>追求中文友好</b> → V3<br>
+    <b>追求信息浓缩</b> → V1
+  </p>
+</div>
+
+<a class="original-link" href="logo-c.svg">查看原版（EST · 2026）→</a>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="AI 轻阅 Logo C - V4 · Q · Quiet Reading">
+  <!-- ============================================
+       方向 C · 衬线 Q 印章（v2 - 用真衬线字体）
+       使用真正的 Georgia / Didot 风格 Q 字母
+       米色印章背景 + 深色 Q + 杂志徽章感
+       ============================================ -->
+
+  <defs>
+    <!-- 米色底（外层）-->
+    <linearGradient id="bgC2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF7F0"/>
+      <stop offset="1" stop-color="#F0E9DA"/>
+    </linearGradient>
+
+    <!-- 印章主色（深赭石）-->
+    <linearGradient id="sealCBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF7F0"/>
+      <stop offset="1" stop-color="#F5EFE0"/>
+    </linearGradient>
+
+    <pattern id="paperC2" x="0" y="0" width="3" height="3" patternUnits="userSpaceOnUse">
+      <circle cx="0.5" cy="0.5" r="0.3" fill="#2C2825"/>
+    </pattern>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bgC2)"/>
+  <rect width="1024" height="1024" fill="url(#paperC2)" opacity="0.06"/>
+
+  <!-- 外层装饰圆环 -->
+  <circle cx="512" cy="512" r="400" fill="none" stroke="#D97757" stroke-width="8"/>
+  <circle cx="512" cy="512" r="378" fill="none" stroke="#D97757" stroke-width="2" opacity="0.6"/>
+
+  <!-- 主印章圆（米色填充，更像高级徽章而非红章）-->
+  <circle cx="512" cy="512" r="350" fill="url(#sealCBg)" stroke="#B8542A" stroke-width="6"/>
+
+  <!-- 上下弧线文字 -->
+  <defs>
+    <path id="topArcC" d="M 232 512 A 280 280 0 0 1 792 512" fill="none"/>
+    <path id="botArcC" d="M 232 512 A 280 280 0 0 0 792 512" fill="none"/>
+  </defs>
+
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="46" letter-spacing="18" fill="#B8542A" font-weight="700">
+    <textPath href="#topArcC" startOffset="50%" text-anchor="middle">AI · READER</textPath>
+  </text>
+  <text font-family="Georgia, 'Times New Roman', serif" font-size="32" letter-spacing="12" fill="#B8542A" font-weight="500" opacity="0.75">
+    <textPath href="#botArcC" startOffset="50%" text-anchor="middle">Q · QUIET READING</textPath>
+  </text>
+
+  <!-- 左右装饰小星点 -->
+  <g fill="#B8542A">
+    <circle cx="232" cy="512" r="6"/>
+    <circle cx="792" cy="512" r="6"/>
+  </g>
+
+  <!-- 中心衬线 Q -->
+  <text x="512" y="640"
+        text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', 'Source Serif Pro', serif"
+        font-size="380"
+        font-weight="700"
+        fill="#D97757"
+        font-style="italic">Q</text>
+
+</svg>
