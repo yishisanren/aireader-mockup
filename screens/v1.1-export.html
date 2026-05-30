@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 阅 · v1.1 导出预览</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/iphone-frame.css">
+<link rel="stylesheet" href="../assets/css/index-page.css">
+<style>
+  /* ============================================
+     Export Sheet (modal bottom sheet)
+     ============================================ */
+
+  /* 背景：reader 模糊层（embed mode 下被压缩） */
+  .reader-blur-bg {
+    height: 70px;
+    flex-shrink: 0;
+    background:
+      linear-gradient(180deg, var(--c-bg) 0%, rgba(255,255,255,0.7) 60%, transparent 100%),
+      var(--c-bg);
+    overflow: hidden;
+    opacity: 0.45;
+    filter: blur(2px);
+    pointer-events: none;
+    padding: 4px 20px 0;
+  }
+  .reader-blur-bg h1 { font-size: 18px; font-weight: 700; margin: 0 0 4px; color: var(--c-fg-primary); }
+  .reader-blur-bg p { color: var(--c-fg-secondary); font-size: 13px; line-height: 1.4; margin: 4px 0; }
+
+  /* Modal overlay */
+  .sheet-overlay {
+    position: absolute;
+    top: 124px;       /* status bar 54 + reader 70 */
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  /* Sheet body */
+  .export-sheet {
+    background: var(--c-bg);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 6px 0 0;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 -8px 32px rgba(0,0,0,0.15);
+  }
+
+  .sheet-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 8px;
+  }
+
+  /* Sticky action footer */
+  .sheet-action-footer {
+    padding: 10px 20px 16px;
+    background: var(--c-bg);
+    border-top: 0.5px solid var(--c-separator);
+    flex-shrink: 0;
+  }
+
+  /* Drag indicator */
+  .sheet-grabber {
+    width: 36px;
+    height: 5px;
+    background: rgba(60,60,67,0.3);
+    border-radius: 999px;
+    margin: 0 auto 14px;
+  }
+  [data-theme="dark"] .sheet-grabber { background: rgba(235,235,245,0.35); }
+
+  .sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px 12px;
+    border-bottom: 0.5px solid var(--c-separator);
+  }
+  .sheet-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--c-fg-primary);
+  }
+  .sheet-close {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--c-bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--c-fg-tertiary);
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  /* Section */
+  .sheet-section {
+    padding: 16px 20px 4px;
+  }
+  .sheet-label {
+    font-size: 13px;
+    color: var(--c-fg-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 10px;
+    font-weight: 500;
+  }
+
+  /* Format pill chooser */
+  .pill-group {
+    display: flex;
+    gap: 8px;
+  }
+  .pill {
+    flex: 1;
+    padding: 10px 14px;
+    background: var(--c-bg-secondary);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--c-fg-primary);
+    border: 1.5px solid transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .pill svg { width: 16px; height: 16px; fill: currentColor; }
+  .pill.active {
+    background: var(--c-accent-soft);
+    color: var(--c-accent);
+    border-color: var(--c-accent);
+    font-weight: 600;
+  }
+
+  /* Title input */
+  .title-input {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--c-bg-secondary);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-size: 15px;
+    color: var(--c-fg-primary);
+    font-family: var(--font-system);
+  }
+  .title-input:focus {
+    outline: none;
+    border-color: var(--c-accent);
+    background: var(--c-bg);
+  }
+  .title-meta {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--c-fg-tertiary);
+    text-align: right;
+  }
+
+  /* Preview thumbnail */
+  .preview-wrap {
+    background: var(--c-bg-secondary);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .preview-thumb {
+    width: 145px;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    position: relative;
+  }
+  [data-theme="dark"] .preview-thumb {
+    background: #1a1a1c;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  .preview-header {
+    padding: 8px 10px 6px;
+    border-bottom: 0.5px solid rgba(60,60,67,0.15);
+  }
+  .preview-header h4 {
+    font-size: 8.5px;
+    font-weight: 700;
+    margin: 0 0 2px;
+    color: #000;
+    line-height: 1.2;
+  }
+  [data-theme="dark"] .preview-header h4 { color: #fff; }
+  .preview-header .subtitle {
+    font-size: 6px;
+    color: #666;
+    letter-spacing: 0.3px;
+  }
+  [data-theme="dark"] .preview-header .subtitle { color: #888; }
+  .preview-body {
+    padding: 8px 10px;
+    font-size: 5px;
+    line-height: 1.6;
+    color: #333;
+  }
+  [data-theme="dark"] .preview-body { color: #ccc; }
+  .preview-body .h2 {
+    font-size: 6px;
+    font-weight: 700;
+    margin: 6px 0 3px;
+    color: #000;
+  }
+  [data-theme="dark"] .preview-body .h2 { color: #fff; }
+  .preview-body .line {
+    height: 3px;
+    background: rgba(0,0,0,0.07);
+    border-radius: 1px;
+    margin-bottom: 2px;
+  }
+  [data-theme="dark"] .preview-body .line { background: rgba(255,255,255,0.1); }
+  .preview-body .line.short { width: 70%; }
+  .preview-body .line.medium { width: 88%; }
+  .preview-body .table-mock {
+    height: 18px;
+    background: rgba(0,0,0,0.05);
+    border: 0.5px solid rgba(0,0,0,0.1);
+    border-radius: 2px;
+    margin: 4px 0;
+  }
+  .preview-body .chart-mock {
+    height: 28px;
+    background: linear-gradient(90deg, rgba(0,122,255,0.1) 0%, rgba(94,92,230,0.1) 100%);
+    border-radius: 2px;
+    margin: 4px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5px;
+    color: var(--c-accent);
+    font-weight: 600;
+  }
+
+  /* Preview footer (watermark area) */
+  .preview-footer {
+    border-top: 0.5px solid rgba(0,0,0,0.1);
+    padding: 6px 8px;
+    background: #FAFAFA;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+  [data-theme="dark"] .preview-footer { background: #0e0e10; border-color: rgba(255,255,255,0.1); }
+  .pf-left {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+  }
+  .pf-logo {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    background: linear-gradient(135deg, #0A84FF 0%, #5E5CE6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+  .pf-brand {
+    font-size: 5px;
+    line-height: 1.2;
+    overflow: hidden;
+  }
+  .pf-brand .name { font-weight: 700; color: #000; }
+  .pf-brand .tag { color: #666; font-size: 4.5px; }
+  [data-theme="dark"] .pf-brand .name { color: #fff; }
+  [data-theme="dark"] .pf-brand .tag { color: #888; }
+  .pf-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .pf-qr {
+    width: 16px;
+    height: 16px;
+    background: #000;
+    background-image:
+      repeating-linear-gradient(0deg, #fff 0px, #fff 1px, #000 1px, #000 2px),
+      repeating-linear-gradient(90deg, #fff 0px, #fff 1px, #000 1px, #000 2px);
+    background-blend-mode: difference;
+    border-radius: 1.5px;
+    position: relative;
+  }
+  .pf-qr::before, .pf-qr::after {
+    content: '';
+    position: absolute;
+    background: white;
+  }
+  .pf-qr::before { top: 1px; left: 1px; width: 3px; height: 3px; box-shadow: inset 0 0 0 0.5px #000; }
+  .pf-qr::after { top: 1px; right: 1px; width: 3px; height: 3px; box-shadow: inset 0 0 0 0.5px #000; }
+  .pf-download {
+    font-size: 4.5px;
+    color: #666;
+    line-height: 1.1;
+  }
+  [data-theme="dark"] .pf-download { color: #888; }
+
+  .preview-side {
+    flex: 1;
+    padding-left: 18px;
+    font-size: 12px;
+    color: var(--c-fg-secondary);
+    line-height: 1.5;
+  }
+  .preview-side strong { color: var(--c-fg-primary); }
+  .preview-side .stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+  .preview-side .stat .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--c-success);
+    flex-shrink: 0;
+  }
+  .preview-side .open-full {
+    margin-top: 10px;
+    color: var(--c-accent);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  /* Pro hint */
+  .pro-hint {
+    margin: 14px 20px 0;
+    padding: 12px;
+    background: linear-gradient(135deg, rgba(255,149,0,0.08) 0%, rgba(255,45,85,0.05) 100%);
+    border: 0.5px solid rgba(255,149,0,0.25);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pro-hint .pro-icon {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #FF9500 0%, #FF2D55 100%);
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+  .pro-hint .pro-text {
+    flex: 1;
+    font-size: 12px;
+    color: var(--c-fg-secondary);
+    line-height: 1.4;
+  }
+  .pro-hint .pro-text b {
+    color: var(--c-fg-primary);
+    font-weight: 600;
+  }
+  .pro-hint .pro-cta {
+    color: var(--c-warning);
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  /* Action button */
+  .export-action {
+    padding: 14px;
+    background: var(--c-accent);
+    color: white;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 16px rgba(0,122,255,0.28);
+    cursor: pointer;
+  }
+  .export-action svg { width: 17px; height: 17px; fill: white; }
+  .export-action-meta {
+    margin: 6px 0 0;
+    text-align: center;
+    font-size: 11px;
+    color: var(--c-fg-tertiary);
+  }
+</style>
+</head>
+<body>
+
+<div class="page-wrap" style="padding-top: 40px;">
+  <div style="text-align:center; margin-bottom: 30px;">
+    <a href="../index.html" style="color: var(--c-accent); text-decoration:none; font-size:15px;">← 返回索引</a>
+    <h2 style="margin: 16px 0 4px; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">v1.1 · 导出预览页</h2>
+    <p style="color: var(--c-fg-secondary); margin: 0;">底部弹出 modal · 格式 + 尺寸 + 标题 + 实时预览 + 一键分享</p>
+  </div>
+
+  <div class="iphone-frame">
+    <div class="iphone-screen">
+
+      <div style="height: 54px; flex-shrink: 0;"></div>
+
+      <!-- Reader 模糊背景（暗示弹出来自阅读界面） -->
+      <div class="reader-blur-bg">
+        <h1>Claude 3.5 Sonnet 深度评测</h1>
+        <p>本报告对 Claude 3.5 Sonnet 在中文推理、代码生成、长文本理解三大维度做系统性评测...</p>
+        <p>1. 核心指标对比</p>
+        <p>模型 | MMLU | HumanEval | MATH</p>
+      </div>
+
+      <!-- Modal overlay -->
+      <div class="sheet-overlay">
+        <div class="export-sheet">
+
+          <div class="sheet-grabber"></div>
+
+          <div class="sheet-header">
+            <span class="sheet-title">导出</span>
+            <span class="sheet-close">✕</span>
+          </div>
+
+          <div class="sheet-scroll">
+
+            <!-- 格式 -->
+            <div class="sheet-section">
+              <p class="sheet-label">格式</p>
+              <div class="pill-group">
+                <div class="pill active">
+                  <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                  长图
+                </div>
+                <div class="pill">
+                  <svg viewBox="0 0 24 24"><path d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM11.5 9.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z"/></svg>
+                  PDF
+                </div>
+              </div>
+            </div>
+
+            <!-- 尺寸 -->
+            <div class="sheet-section">
+              <p class="sheet-label">尺寸</p>
+              <div class="pill-group">
+                <div class="pill active">社交 · 750 px</div>
+                <div class="pill">原图 · 1242 px</div>
+              </div>
+            </div>
+
+            <!-- 标题 -->
+            <div class="sheet-section">
+              <p class="sheet-label">标题</p>
+              <input type="text" class="title-input" value="Claude 3.5 Sonnet 深度评测报告" />
+              <p class="title-meta">28 / 50</p>
+            </div>
+
+            <!-- 预览 -->
+            <div class="sheet-section">
+              <p class="sheet-label">实时预览</p>
+              <div class="preview-wrap">
+                <div class="preview-thumb">
+                  <div class="preview-header">
+                    <h4>Claude 3.5 Sonnet 深度评测报告</h4>
+                    <div class="subtitle">AI 阅 · 2026.05.30</div>
+                  </div>
+                  <div class="preview-body">
+                    <div class="line medium"></div>
+                    <div class="line"></div>
+                    <div class="line short"></div>
+                    <div class="h2">1. 核心指标对比</div>
+                    <div class="table-mock"></div>
+                    <div class="line short"></div>
+                    <div class="h2">2. 推理链路</div>
+                    <div class="chart-mock">流程图</div>
+                    <div class="line medium"></div>
+                  </div>
+                  <div class="preview-footer">
+                    <div class="pf-left">
+                      <div class="pf-logo">阅</div>
+                      <div class="pf-brand">
+                        <div class="name">AI 阅</div>
+                        <div class="tag">让 AI 内容随手可读</div>
+                      </div>
+                    </div>
+                    <div class="pf-right">
+                      <div class="pf-qr"></div>
+                      <div class="pf-download">App Store<br>下载</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="preview-side">
+                  <div class="stat"><span class="dot"></span><span>长图 · 750 × 4280</span></div>
+                  <div class="stat"><span class="dot"></span><span>预计 ~ 1.8 MB</span></div>
+                  <div class="open-full">点击查看实际大小 →</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Pro hint -->
+            <div class="pro-hint">
+              <div class="pro-icon">PRO</div>
+              <div class="pro-text">
+                升级后可<b>去除水印</b>、自定义品牌 logo 与文案
+              </div>
+              <span class="pro-cta">即将推出</span>
+            </div>
+
+          </div>
+
+          <!-- 固定底部 action -->
+          <div class="sheet-action-footer">
+            <div class="export-action">
+              <svg viewBox="0 0 24 24"><path d="M18 8h-3V3H9v5H6l6 6 6-6zM5 18v2h14v-2H5z" transform="rotate(180 12 12)"/></svg>
+              导出并分享
+            </div>
+            <p class="export-action-meta">⌛ 预计 3-6 秒生成 · 自动调起分享面板</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <p style="text-align:center; color: var(--c-fg-tertiary); font-size: 14px; margin-top: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+    底部弹出 modal sheet（iOS 原生交互模式）。所有选项一屏可见，无需二级菜单。<br>
+    "导出并分享"直接调起系统分享面板，发送到微信仅需 1 步。
+  </p>
+</div>
+
+<script src="../assets/js/shared.js"></script>
+<script>
+  // pill toggle
+  document.querySelectorAll('.pill-group').forEach(group => {
+    group.querySelectorAll('.pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        group.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+      });
+    });
+  });
+  // title char counter
+  const input = document.querySelector('.title-input');
+  const meta = document.querySelector('.title-meta');
+  if (input && meta) {
+    input.addEventListener('input', () => {
+      meta.textContent = `${input.value.length} / 50`;
+    });
+  }
+</script>
+</body>
+</html>

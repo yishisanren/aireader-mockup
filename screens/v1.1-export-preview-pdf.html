@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 阅 · v1.1 PDF 样品（A4）</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<style>
+  * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #4a5263 0%, #2c3340 100%);
+    min-height: 100vh;
+    color: #fff;
+  }
+
+  .stage {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  .stage-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .stage-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    letter-spacing: -0.5px;
+  }
+  .stage-header p { color: rgba(255,255,255,0.7); font-size: 15px; margin: 0; }
+  .stage-header a {
+    display: inline-block;
+    margin-top: 16px;
+    color: #5AC8FA;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .stage-meta {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .stage-meta .chip {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    backdrop-filter: blur(10px);
+  }
+  .stage-meta .chip b { color: white; font-weight: 600; }
+
+  /* A4 比例 (210mm × 297mm = 1:1.414) */
+  .pdf-page {
+    width: 595px;       /* A4 width in points */
+    margin: 0 auto;
+    background: white;
+    color: #000;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow:
+      0 30px 80px rgba(0,0,0,0.4),
+      0 12px 30px rgba(0,0,0,0.25),
+      0 0 0 1px rgba(0,0,0,0.15);
+    font-size: 11pt;
+    position: relative;
+  }
+
+  /* PDF 阅读器 chrome（模拟 Preview / Adobe 风格）*/
+  .pdf-chrome {
+    background: #2c2c2e;
+    color: rgba(255,255,255,0.7);
+    padding: 8px 14px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .pdf-chrome .left { display: flex; align-items: center; gap: 6px; }
+  .pdf-chrome .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .pdf-chrome .red { background: #FF5F57; }
+  .pdf-chrome .yellow { background: #FEBC2E; }
+  .pdf-chrome .green { background: #28C840; }
+  .pdf-chrome .title { font-weight: 500; margin-left: 8px; }
+
+  /* PDF 实际页面内容 */
+  .pdf-content {
+    padding: 56px 56px 36px;
+    min-height: 700px;
+  }
+
+  /* PDF 页头 */
+  .pdf-header {
+    padding-bottom: 24px;
+    margin-bottom: 28px;
+    border-bottom: 1.5px solid #0A84FF;
+  }
+  .pdf-header h1 {
+    font-size: 24pt;
+    font-weight: 700;
+    margin: 0 0 8px;
+    line-height: 1.3;
+    color: #000;
+    letter-spacing: -0.3px;
+  }
+  .pdf-header .meta {
+    font-size: 9pt;
+    color: #888;
+  }
+  .pdf-header .meta b { color: #0A84FF; }
+
+  /* PDF 正文 */
+  .pdf-body { color: #1a1a1a; line-height: 1.7; }
+  .pdf-body p { margin: 0 0 12px; }
+  .pdf-body h2 {
+    font-size: 14pt;
+    font-weight: 600;
+    margin: 24px 0 10px;
+    color: #000;
+  }
+  .pdf-body strong { font-weight: 600; }
+  .pdf-body .highlight {
+    background: linear-gradient(180deg, transparent 65%, rgba(255,235,59,0.5) 65%);
+    padding: 0 2px;
+  }
+
+  .pdf-body table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 9pt;
+    margin: 12px 0 20px;
+  }
+  .pdf-body th, .pdf-body td {
+    padding: 6px 10px;
+    border: 0.5px solid rgba(0,0,0,0.15);
+    text-align: left;
+  }
+  .pdf-body th { background: #F0F0F2; font-weight: 600; }
+  .pdf-body td strong { color: #0A84FF; }
+
+  .pdf-body pre {
+    background: #F5F5F7;
+    border-radius: 4px;
+    padding: 12px 14px;
+    overflow: hidden;
+    font-family: "SF Mono", Menlo, monospace;
+    font-size: 8.5pt;
+    line-height: 1.55;
+    margin: 12px 0 18px;
+    border: 0.5px solid rgba(0,0,0,0.06);
+  }
+  .pdf-body pre .k { color: #AD3DA4; }
+  .pdf-body pre .t { color: #5482BB; }
+  .pdf-body pre .s { color: #D12F1B; }
+
+  .pdf-body .formula {
+    background: #FAFAFA;
+    border-left: 2px solid #0A84FF;
+    padding: 10px 14px;
+    margin: 12px 0 18px;
+    font-family: "Times New Roman", serif;
+    font-size: 11pt;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* PDF 页脚（v1.1 商业核心） */
+  .pdf-footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 0.5px solid rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .pf-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pf-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0A84FF 0%, #5E5CE6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+  }
+  .pf-brand .name {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #000;
+  }
+  .pf-brand .slogan {
+    font-size: 8pt;
+    color: #888;
+  }
+  .pf-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pf-qr {
+    width: 48px;
+    height: 48px;
+    background: white;
+    border: 0.5px solid rgba(0,0,0,0.1);
+    border-radius: 4px;
+    padding: 2px;
+  }
+  .pf-qr img { width: 100%; height: 100%; display: block; }
+  .pf-cta {
+    text-align: right;
+    font-size: 8pt;
+    color: #555;
+    line-height: 1.4;
+  }
+  .pf-cta b { color: #000; font-weight: 600; font-size: 9pt; }
+
+  /* 页码（PDF 特有）*/
+  .pdf-pagenum {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8pt;
+    color: #aaa;
+  }
+
+  /* 说明卡片 */
+  .notes {
+    margin-top: 60px;
+    padding: 32px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    max-width: 750px;
+    margin-left: auto;
+    margin-right: auto;
+    backdrop-filter: blur(20px);
+  }
+  .notes h3 {
+    margin: 0 0 16px;
+    font-size: 19px;
+    font-weight: 600;
+    color: white;
+  }
+  .notes p {
+    color: rgba(255,255,255,0.8);
+    line-height: 1.7;
+    margin: 0 0 12px;
+  }
+  .notes b { color: white; }
+  .notes ul { margin: 8px 0 0; padding-left: 20px; color: rgba(255,255,255,0.8); line-height: 1.8; }
+
+  @media (max-width: 700px) {
+    .pdf-page { width: 100%; max-width: 595px; }
+    .pdf-content { padding: 36px 28px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <div class="stage-header">
+    <h1>v1.1 PDF 样品 · A4 比例</h1>
+    <p>正式场景导出格式（邮件、归档、打印）</p>
+    <div class="stage-meta">
+      <span class="chip"><b>尺寸</b> 595 × 842 pt (A4)</span>
+      <span class="chip"><b>WKWebView.createPDF</b> 原生 API</span>
+      <span class="chip"><b>0 依赖</b></span>
+    </div>
+    <a href="../index.html">← 返回索引</a> ·
+    <a href="v1.1-export-preview-long.html">看长图样品 →</a>
+  </div>
+
+  <!-- A4 PDF -->
+  <div class="pdf-page">
+
+    <div class="pdf-chrome">
+      <div class="left">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+        <span class="title">Claude 3.5 评测.pdf — 预览</span>
+      </div>
+      <div>第 1 页，共 1 页</div>
+    </div>
+
+    <div class="pdf-content">
+
+      <!-- 页头 -->
+      <div class="pdf-header">
+        <h1>Claude 3.5 Sonnet 深度评测报告</h1>
+        <div class="meta">2026.05.30 · 8 分钟阅读 · 由 <b>AI 阅</b> 导出</div>
+      </div>
+
+      <!-- 正文 -->
+      <div class="pdf-body">
+        <p>本报告对 <strong>Claude 3.5 Sonnet</strong> 在中文推理、代码生成、长文本理解三大维度做<span class="highlight">系统性评测</span>。</p>
+
+        <h2>1. 核心指标对比</h2>
+        <table>
+          <thead>
+            <tr><th>模型</th><th>MMLU</th><th>HumanEval</th><th>MATH</th><th>C-Eval</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Claude 3.5 Sonnet</td><td><strong>88.7</strong></td><td><strong>92.0</strong></td><td>71.1</td><td>82.4</td></tr>
+            <tr><td>GPT-4o</td><td>88.7</td><td>90.2</td><td>76.6</td><td>81.0</td></tr>
+            <tr><td>Gemini 1.5 Pro</td><td>85.9</td><td>84.1</td><td>67.7</td><td>78.9</td></tr>
+          </tbody>
+        </table>
+
+        <h2>2. 数学能力</h2>
+        <p>交叉熵损失函数求导，准确率 <strong>96.2%</strong>：</p>
+        <div class="formula">∂L/∂θ = −(1/N) Σ [yᵢ · log pθ(xᵢ) + (1−yᵢ) · log(1−pθ(xᵢ))]</div>
+
+        <h2>3. 代码生成</h2>
+        <pre><span class="k">struct</span> <span class="t">ReaderView</span>: <span class="t">View</span> {
+    @<span class="t">State</span> <span class="k">var</span> fontSize: <span class="t">CGFloat</span> = <span class="s">17</span>
+    <span class="k">var</span> body: <span class="k">some</span> <span class="t">View</span> {
+        <span class="t">WebViewWrapper</span>(html: content)
+    }
+}</pre>
+
+        <h2>4. 结论</h2>
+        <p>Claude 3.5 Sonnet 在<span class="highlight">代码</span>和<span class="highlight">中文</span>方面最强。</p>
+      </div>
+
+      <!-- 页脚 -->
+      <div class="pdf-footer">
+        <div class="pf-left">
+          <div class="pf-logo">阅</div>
+          <div class="pf-brand">
+            <div class="name">AI 阅 · AIReader</div>
+            <div class="slogan">让 AI 内容随手可读</div>
+          </div>
+        </div>
+        <div class="pf-right">
+          <div class="pf-qr">
+            <img src="../assets/qr-appstore.png" alt="QR"/>
+          </div>
+          <div class="pf-cta">
+            <b>扫码下载</b><br>App Store
+          </div>
+        </div>
+      </div>
+
+      <div class="pdf-pagenum">— 1 —</div>
+
+    </div>
+
+  </div>
+
+  <div class="notes">
+    <h3>📄 PDF 实现要点</h3>
+    <p>这就是 v1.1 PDF 导出的最终视觉效果。<b>WKWebView.createPDF</b>（iOS 14+ 原生）直接把已渲染好的内容输出为 PDF，0 第三方依赖。</p>
+    <p><b>适用场景</b>：</p>
+    <ul>
+      <li>转发给客户 / 老板（邮件附件，专业格式）</li>
+      <li>归档存档（不可编辑、长期保存）</li>
+      <li>打印（A4 标准尺寸，办公室直接出纸）</li>
+    </ul>
+    <p style="margin-top: 16px;"><b>与长图的差异</b>：PDF 适合「正式场景」；长图适合「微信传播」。两个都做，覆盖完整。</p>
+  </div>
+
+</div>
+
+</body>
+</html>

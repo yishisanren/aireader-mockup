@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 阅 · v1.1 长图样品（750px）</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<style>
+  /* ============================================
+     真实 750px 宽长图样品（1:1 比例）
+     这是 v1.1 实际导出后的视觉效果
+     ============================================ */
+
+  * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    background:
+      radial-gradient(ellipse at top, #eef3ff 0%, #f5f5f7 50%, #f5f5f7 100%);
+    min-height: 100vh;
+    color: #000;
+  }
+
+  /* Page wrap：把长图居中展示 */
+  .stage {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  .stage-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .stage-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    letter-spacing: -0.5px;
+  }
+  .stage-header p { color: #555; font-size: 15px; margin: 0; }
+  .stage-header a {
+    display: inline-block;
+    margin-top: 16px;
+    color: #0A84FF;
+    text-decoration: none;
+    font-size: 15px;
+  }
+
+  .stage-meta {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .stage-meta .chip {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: #555;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  }
+  .stage-meta .chip b { color: #000; font-weight: 600; }
+
+  /* 实际长图（750px 宽） */
+  .long-image {
+    width: 750px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow:
+      0 20px 60px rgba(0,0,0,0.12),
+      0 8px 24px rgba(0,0,0,0.06);
+    font-size: 16px;
+  }
+
+  /* === 长图：页头 === */
+  .li-header {
+    padding: 40px 48px 28px;
+    background: linear-gradient(135deg, #FAFAFE 0%, #F5F5F7 100%);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .li-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.3;
+    margin: 0 0 12px;
+    letter-spacing: -0.5px;
+    color: #000;
+  }
+  .li-header .subtitle {
+    font-size: 14px;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .li-header .subtitle .dot { width: 3px; height: 3px; background: #bbb; border-radius: 50%; }
+  .li-header .subtitle b { color: #0A84FF; font-weight: 600; }
+
+  /* === 长图：正文 === */
+  .li-body {
+    padding: 32px 48px 40px;
+    color: #1a1a1a;
+    line-height: 1.7;
+    font-size: 16px;
+  }
+  .li-body p { margin: 0 0 16px; }
+  .li-body h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 32px 0 16px;
+    letter-spacing: -0.2px;
+    color: #000;
+  }
+  .li-body strong { font-weight: 600; }
+  .li-body .highlight {
+    display: inline-block;
+    background: linear-gradient(180deg, transparent 60%, rgba(255,235,59,0.5) 60%);
+    padding: 0 3px;
+  }
+
+  /* 表格 */
+  .li-body table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+    margin: 16px 0 24px;
+  }
+  .li-body th, .li-body td {
+    padding: 10px 14px;
+    border: 1px solid rgba(0,0,0,0.1);
+    text-align: left;
+  }
+  .li-body th {
+    background: #F5F5F7;
+    font-weight: 600;
+  }
+  .li-body td strong { color: #0A84FF; }
+
+  /* 代码块 */
+  .li-body pre {
+    background: #F5F5F7;
+    border-radius: 8px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 16px 0;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+  .li-body pre .k { color: #AD3DA4; }
+  .li-body pre .t { color: #5482BB; }
+  .li-body pre .s { color: #D12F1B; }
+  .li-body pre .c { color: #707F8C; font-style: italic; }
+
+  /* Mermaid 占位 */
+  .li-body .diagram {
+    background: linear-gradient(135deg, #f8f9fb 0%, #eef1f7 100%);
+    border-radius: 8px;
+    padding: 24px;
+    margin: 16px 0 24px;
+    text-align: center;
+    border: 1px solid rgba(0,0,0,0.05);
+  }
+  .li-body .diagram svg { max-width: 100%; height: auto; }
+
+  /* 公式 */
+  .li-body .formula {
+    background: #FAFAFA;
+    border-left: 3px solid #0A84FF;
+    padding: 14px 18px;
+    margin: 16px 0 24px;
+    font-family: "Times New Roman", serif;
+    font-size: 17px;
+    overflow-x: auto;
+    border-radius: 0 6px 6px 0;
+  }
+
+  /* 引用块 */
+  .li-body blockquote {
+    border-left: 3px solid #0A84FF;
+    padding: 10px 18px;
+    margin: 16px 0;
+    color: #555;
+    background: rgba(10,132,255,0.04);
+    border-radius: 0 6px 6px 0;
+  }
+  .li-body blockquote p { margin: 0; }
+
+  /* === 长图：页脚（关键！v1.1 商业核心） === */
+  .li-footer {
+    background: linear-gradient(135deg, #1c1c1e 0%, #2c2c2e 100%);
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    color: white;
+  }
+  .lf-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
+  .lf-logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #0A84FF 0%, #5E5CE6 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(10,132,255,0.4);
+  }
+  .lf-brand .name {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0 0 2px;
+    letter-spacing: 0.3px;
+  }
+  .lf-brand .slogan {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    margin: 0;
+  }
+  .lf-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+  .lf-qr {
+    width: 64px;
+    height: 64px;
+    background: white;
+    border-radius: 8px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lf-qr img { width: 100%; height: 100%; display: block; }
+  .lf-cta {
+    text-align: right;
+  }
+  .lf-cta .l1 {
+    font-size: 11px;
+    color: rgba(255,255,255,0.55);
+    margin: 0 0 2px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .lf-cta .l2 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    color: white;
+  }
+
+  /* === 对比展示 === */
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 60px;
+    align-items: start;
+  }
+  .compare-col h3 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    letter-spacing: -0.2px;
+  }
+  .compare-col .scaled {
+    transform: scale(0.55);
+    transform-origin: top center;
+    margin-bottom: -1900px;
+  }
+  .compare-col p.caption {
+    margin-top: -1880px;
+    text-align: center;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 900px) {
+    .compare-row { grid-template-columns: 1fr; gap: 30px; }
+    .long-image { width: 100%; max-width: 750px; transform: none; }
+    .compare-col .scaled { transform: scale(0.42); }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <div class="stage-header">
+    <h1>v1.1 长图样品 · 真实 750px 宽</h1>
+    <p>这就是 v1.1 导出后用户分享到微信、朋友圈、小红书的实际效果</p>
+    <div class="stage-meta">
+      <span class="chip"><b>宽度</b> 750 px</span>
+      <span class="chip"><b>页头</b> 标题 + 副标题</span>
+      <span class="chip"><b>页脚</b> Logo + Slogan + 二维码</span>
+      <span class="chip"><b>水印占比</b> ~ 6%</span>
+    </div>
+    <a href="../index.html">← 返回索引</a> ·
+    <a href="v1.1-export.html">查看导出预览页 →</a>
+  </div>
+
+  <!-- 真实长图（750px 宽） -->
+  <div class="long-image">
+
+    <!-- 页头 -->
+    <div class="li-header">
+      <h1>Claude 3.5 Sonnet 深度评测报告</h1>
+      <div class="subtitle">
+        <span>📅 2026.05.30</span>
+        <span class="dot"></span>
+        <span>⏱ 8 分钟阅读</span>
+        <span class="dot"></span>
+        <span>由 <b>AI 阅</b> 导出</span>
+      </div>
+    </div>
+
+    <!-- 正文 -->
+    <div class="li-body">
+      <p>本报告对 <strong>Claude 3.5 Sonnet</strong> 在中文推理、代码生成、长文本理解三大维度做<span class="highlight">系统性评测</span>，覆盖 12 个公开 benchmark 和 50 个真实业务场景测试。</p>
+
+      <h2>1. 核心指标对比</h2>
+
+      <table>
+        <thead>
+          <tr><th>模型</th><th>MMLU</th><th>HumanEval</th><th>MATH</th><th>C-Eval</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Claude 3.5 Sonnet</td><td><strong>88.7</strong></td><td><strong>92.0</strong></td><td>71.1</td><td>82.4</td></tr>
+          <tr><td>GPT-4o</td><td>88.7</td><td>90.2</td><td>76.6</td><td>81.0</td></tr>
+          <tr><td>Gemini 1.5 Pro</td><td>85.9</td><td>84.1</td><td>67.7</td><td>78.9</td></tr>
+        </tbody>
+      </table>
+
+      <h2>2. 推理链路示意</h2>
+
+      <div class="diagram">
+        <svg width="500" height="220" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+            </marker>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#0A84FF"/><stop offset="1" stop-color="#5E5CE6"/>
+            </linearGradient>
+          </defs>
+          <!-- 节点 -->
+          <rect x="10" y="90" width="100" height="40" rx="6" fill="url(#g1)"/>
+          <text x="60" y="115" text-anchor="middle" fill="white" font-size="13" font-weight="600">用户输入</text>
+
+          <rect x="160" y="90" width="100" height="40" rx="6" fill="#FF9500"/>
+          <text x="210" y="115" text-anchor="middle" fill="white" font-size="13" font-weight="600">意图分类</text>
+
+          <rect x="320" y="20" width="80" height="36" rx="6" fill="#34C759"/>
+          <text x="360" y="43" text-anchor="middle" fill="white" font-size="12">代码生成</text>
+
+          <rect x="320" y="100" width="80" height="36" rx="6" fill="#34C759"/>
+          <text x="360" y="123" text-anchor="middle" fill="white" font-size="12">CoT 推理</text>
+
+          <rect x="320" y="180" width="80" height="36" rx="6" fill="#34C759"/>
+          <text x="360" y="203" text-anchor="middle" fill="white" font-size="12">RAG 检索</text>
+
+          <rect x="430" y="90" width="60" height="40" rx="6" fill="#1c1c1e"/>
+          <text x="460" y="115" text-anchor="middle" fill="white" font-size="13" font-weight="600">输出</text>
+
+          <!-- 连线 -->
+          <line x1="110" y1="110" x2="160" y2="110" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="260" y1="100" x2="320" y2="50" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="260" y1="110" x2="320" y2="115" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="260" y1="120" x2="320" y2="195" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="400" y1="38" x2="430" y2="100" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="400" y1="118" x2="430" y2="115" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+          <line x1="400" y1="198" x2="430" y2="130" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+        </svg>
+      </div>
+
+      <h2>3. 数学能力</h2>
+
+      <p>在 GSM8K 测试中，模型对交叉熵损失函数的求导准确率为 <strong>96.2%</strong>：</p>
+
+      <div class="formula">
+        ∂L/∂θ = −(1/N) Σ [yᵢ · log pθ(xᵢ) + (1−yᵢ) · log(1−pθ(xᵢ))]
+      </div>
+
+      <h2>4. 代码生成实测</h2>
+
+      <p>以下是模型生成的 SwiftUI 代码（一次通过率 <strong>89%</strong>）：</p>
+
+      <pre><span class="k">struct</span> <span class="t">ReaderView</span>: <span class="t">View</span> {
+    @<span class="t">State</span> <span class="k">private var</span> fontSize: <span class="t">CGFloat</span> = <span class="s">17</span>
+    @<span class="t">Environment</span>(\.colorScheme) <span class="k">var</span> scheme
+
+    <span class="k">var</span> body: <span class="k">some</span> <span class="t">View</span> {
+        <span class="t">ScrollView</span> {
+            <span class="t">WebViewWrapper</span>(html: content)
+                .<span class="c">frame</span>(minHeight: <span class="s">600</span>)
+        }
+    }
+}</pre>
+
+      <h2>5. 结论</h2>
+
+      <p>Claude 3.5 Sonnet 在<span class="highlight">代码生成</span>和<span class="highlight">中文理解</span>方面表现最强，适合作为<strong>编程助手</strong>与<strong>内容创作</strong>的主力模型。在严格数学推理上仍略逊 GPT-4o。</p>
+
+      <blockquote>
+        <p>核心建议：日常 80% 任务用 Claude 3.5，复杂数学题 fallback 到 GPT-4o。</p>
+      </blockquote>
+
+    </div>
+
+    <!-- 页脚（v1.1 商业核心） -->
+    <div class="li-footer">
+      <div class="lf-left">
+        <div class="lf-logo">阅</div>
+        <div class="lf-brand">
+          <div class="name">AI 阅 · AIReader</div>
+          <div class="slogan">让 AI 内容随手可读</div>
+        </div>
+      </div>
+      <div class="lf-right">
+        <div class="lf-qr">
+          <img src="../assets/qr-appstore.png" alt="QR" />
+        </div>
+        <div class="lf-cta">
+          <div class="l1">扫码下载</div>
+          <div class="l2">App Store</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 实战说明 -->
+  <div style="margin-top: 60px; padding: 32px; background: white; border-radius: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); max-width: 750px; margin-left: auto; margin-right: auto;">
+    <h3 style="margin: 0 0 16px; font-size: 19px; font-weight: 600;">📱 验证方法</h3>
+    <p style="color: #555; line-height: 1.7; margin: 0 0 12px;">
+      1. <strong>在 iPhone Safari 打开本页</strong>，长按 → 截屏 → 保存 → 发到微信任意对话
+    </p>
+    <p style="color: #555; line-height: 1.7; margin: 0 0 12px;">
+      2. <strong>看看微信里的预览效果</strong>是否符合你的"体面、克制、传播力强"的预期
+    </p>
+    <p style="color: #555; line-height: 1.7; margin: 0 0 12px;">
+      3. <strong>试着用相机 App 扫码</strong>页脚的二维码，会跳转到 GitHub Pages 主页（v1.1 上架后会替换为 App Store 链接）
+    </p>
+    <p style="color: #555; line-height: 1.7; margin: 0;">
+      4. <strong>水印占比评估</strong>：实测页脚高度约占整图 <strong>5.6%</strong>，远低于 spec 设定的 8% 上限
+    </p>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 阅 · v1.1 分享面板</title>
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/iphone-frame.css">
+<link rel="stylesheet" href="../assets/css/index-page.css">
+<style>
+  /* iOS Share Sheet 复刻 */
+
+  .reader-bg {
+    flex: 1;
+    background: var(--c-bg);
+    opacity: 0.4;
+    filter: blur(3px);
+    padding: 20px;
+  }
+  .reader-bg h1 { font-size: 22px; font-weight: 700; color: var(--c-fg-primary); }
+  .reader-bg p { color: var(--c-fg-secondary); font-size: 14px; }
+
+  .share-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 0 0 0;
+    z-index: 30;
+  }
+
+  .share-sheet {
+    background: rgba(248, 248, 248, 0.92);
+    backdrop-filter: blur(20px);
+    border-top-left-radius: 14px;
+    border-top-right-radius: 14px;
+    padding: 12px 0 24px;
+    max-height: 88%;
+    overflow-y: auto;
+  }
+  [data-theme="dark"] .share-sheet {
+    background: rgba(28, 28, 30, 0.95);
+  }
+
+  .share-grabber {
+    width: 36px; height: 5px;
+    background: rgba(60,60,67,0.3);
+    border-radius: 999px;
+    margin: 0 auto 14px;
+  }
+
+  /* Preview header (content being shared) */
+  .share-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px 14px;
+    border-bottom: 0.5px solid rgba(0,0,0,0.08);
+  }
+  [data-theme="dark"] .share-header { border-color: rgba(255,255,255,0.1); }
+
+  .share-thumb {
+    width: 50px;
+    height: 78px;
+    border-radius: 6px;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .share-thumb .t-head {
+    padding: 4px 5px;
+    border-bottom: 0.5px solid rgba(0,0,0,0.1);
+  }
+  .share-thumb .t-title {
+    font-size: 4px;
+    font-weight: 700;
+    color: #000;
+    line-height: 1.2;
+  }
+  .share-thumb .t-body {
+    flex: 1;
+    padding: 3px 5px;
+  }
+  .share-thumb .t-line {
+    height: 2px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 1px;
+    margin-bottom: 2px;
+  }
+  .share-thumb .t-line.s { width: 60%; }
+  .share-thumb .t-table {
+    height: 10px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 1px;
+    margin: 2px 0;
+  }
+  .share-thumb .t-foot {
+    height: 8px;
+    background: linear-gradient(135deg, #1c1c1e, #2c2c2e);
+  }
+
+  .share-info { flex: 1; min-width: 0; }
+  .share-info .title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 0 2px;
+    color: var(--c-fg-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .share-info .meta {
+    font-size: 13px;
+    color: var(--c-fg-tertiary);
+    margin: 0;
+  }
+  .share-info .options { color: var(--c-accent); font-size: 13px; margin-top: 2px; }
+
+  /* AirDrop row */
+  .airdrop-row {
+    padding: 16px 16px 10px;
+  }
+  .airdrop-icons {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+  }
+  .ad-item {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 70px;
+  }
+  .ad-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--c-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+  }
+  .ad-circle.gray { background: #8E8E93; }
+  .ad-name {
+    font-size: 11px;
+    color: var(--c-fg-primary);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  /* App row */
+  .app-row-wrap {
+    padding: 0 16px 12px;
+  }
+  .app-row {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 14px;
+    padding: 12px 0;
+  }
+  [data-theme="dark"] .app-row { background: rgba(44, 44, 46, 0.85); }
+  .app-icons {
+    display: flex;
+    gap: 14px;
+    padding: 0 14px;
+    overflow-x: auto;
+  }
+  .app-item {
+    flex-shrink: 0;
+    width: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .app-icon-sq {
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  }
+  .ai-wechat { background: linear-gradient(135deg, #07C160 0%, #06AD56 100%); font-size: 28px; }
+  .ai-moments { background: linear-gradient(135deg, #07C160 0%, #06AD56 100%); }
+  .ai-xhs { background: linear-gradient(135deg, #FE2C55 0%, #E0184D 100%); font-size: 16px; }
+  .ai-weibo { background: linear-gradient(135deg, #E6162D 0%, #C00C24 100%); font-size: 14px; }
+  .ai-mail { background: linear-gradient(135deg, #5AC8FA 0%, #007AFF 100%); font-size: 26px; }
+  .ai-msg { background: linear-gradient(135deg, #5AC8FA 0%, #34C759 100%); font-size: 24px; }
+
+  .app-name {
+    font-size: 11px;
+    color: var(--c-fg-primary);
+    text-align: center;
+    line-height: 1.2;
+    max-width: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Actions list */
+  .actions-wrap {
+    padding: 0 16px 14px;
+  }
+  .actions-card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  [data-theme="dark"] .actions-card { background: rgba(44, 44, 46, 0.85); }
+  .action-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 0.5px solid rgba(0,0,0,0.08);
+    color: var(--c-fg-primary);
+    font-size: 16px;
+  }
+  [data-theme="dark"] .action-row { border-color: rgba(255,255,255,0.08); }
+  .action-row:last-child { border-bottom: none; }
+  .action-row .icon {
+    width: 22px;
+    height: 22px;
+    color: var(--c-fg-primary);
+  }
+  .action-row .icon svg { width: 100%; height: 100%; fill: currentColor; }
+  .action-row.highlight {
+    background: rgba(10, 132, 255, 0.06);
+  }
+  .action-row.highlight .label {
+    color: var(--c-accent);
+    font-weight: 600;
+  }
+  .action-row .label {
+    flex: 1;
+    margin-left: 14px;
+  }
+
+  /* Cancel button */
+  .cancel-wrap {
+    padding: 0 16px;
+  }
+  .cancel-btn {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(8px);
+    border-radius: 14px;
+    padding: 14px;
+    text-align: center;
+    color: var(--c-accent);
+    font-size: 17px;
+    font-weight: 600;
+  }
+  [data-theme="dark"] .cancel-btn { background: rgba(44, 44, 46, 0.85); }
+</style>
+</head>
+<body>
+
+<div class="page-wrap" style="padding-top: 40px;">
+  <div style="text-align:center; margin-bottom: 30px;">
+    <a href="../index.html" style="color: var(--c-accent); text-decoration:none; font-size:15px;">← 返回索引</a>
+    <h2 style="margin: 16px 0 4px; font-size: 28px; font-weight: 700; letter-spacing: -0.5px;">v1.1 · 系统分享面板</h2>
+    <p style="color: var(--c-fg-secondary); margin: 0;">Q1=A 决策落地：导出后直接调起 iOS 原生 UIActivityViewController</p>
+  </div>
+
+  <div class="iphone-frame">
+    <div class="iphone-screen">
+
+      <div style="height: 54px; flex-shrink: 0;"></div>
+
+      <div class="reader-bg">
+        <h1>Claude 3.5 评测</h1>
+        <p>表格 + 流程图...</p>
+      </div>
+
+      <div class="share-overlay">
+        <div class="share-sheet">
+
+          <div class="share-grabber"></div>
+
+          <div class="share-header">
+            <div class="share-thumb">
+              <div class="t-head"><div class="t-title">Claude 3.5 评测</div></div>
+              <div class="t-body">
+                <div class="t-line"></div>
+                <div class="t-line"></div>
+                <div class="t-line s"></div>
+                <div class="t-table"></div>
+                <div class="t-line s"></div>
+              </div>
+              <div class="t-foot"></div>
+            </div>
+            <div class="share-info">
+              <p class="title">Claude 3.5 评测.jpg</p>
+              <p class="meta">长图 · 750 × 4280 · 1.8 MB</p>
+              <p class="options">▸ 选项 →</p>
+            </div>
+          </div>
+
+          <!-- AirDrop -->
+          <div class="airdrop-row">
+            <div class="airdrop-icons">
+              <div class="ad-item">
+                <div class="ad-circle">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C7.58 2 4 5.58 4 10c0 4.42 8 12 8 12s8-7.58 8-12c0-4.42-3.58-8-8-8zm-1 13.4L7 11.4l1.4-1.4L11 12.6 15.6 8 17 9.4l-6 6z"/>
+                  </svg>
+                </div>
+                <div class="ad-name">AirDrop</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- App row -->
+          <div class="app-row-wrap">
+            <div class="app-row">
+              <div class="app-icons">
+                <div class="app-item">
+                  <div class="app-icon-sq ai-wechat">💬</div>
+                  <div class="app-name">微信</div>
+                </div>
+                <div class="app-item">
+                  <div class="app-icon-sq ai-moments">朋友圈</div>
+                  <div class="app-name">朋友圈</div>
+                </div>
+                <div class="app-item">
+                  <div class="app-icon-sq ai-xhs">小红书</div>
+                  <div class="app-name">小红书</div>
+                </div>
+                <div class="app-item">
+                  <div class="app-icon-sq ai-weibo">微博</div>
+                  <div class="app-name">微博</div>
+                </div>
+                <div class="app-item">
+                  <div class="app-icon-sq ai-mail">✉</div>
+                  <div class="app-name">邮件</div>
+                </div>
+                <div class="app-item">
+                  <div class="app-icon-sq ai-msg">💬</div>
+                  <div class="app-name">信息</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions list -->
+          <div class="actions-wrap">
+            <div class="actions-card">
+              <div class="action-row highlight">
+                <span class="label">拷贝</span>
+                <span class="icon">
+                  <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                </span>
+              </div>
+              <div class="action-row">
+                <span class="label">保存图像</span>
+                <span class="icon">
+                  <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" transform="rotate(180 12 12)"/><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>
+                </span>
+              </div>
+              <div class="action-row">
+                <span class="label">存储到「文件」</span>
+                <span class="icon">
+                  <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.11 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z"/></svg>
+                </span>
+              </div>
+              <div class="action-row">
+                <span class="label">打印</span>
+                <span class="icon">
+                  <svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+                </span>
+              </div>
+              <div class="action-row">
+                <span class="label">添加到备忘录</span>
+                <span class="icon">
+                  <svg viewBox="0 0 24 24"><path d="M19 3H4.99c-1.11 0-1.98.9-1.98 2L3 19c0 1.1.88 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 12H7v-2h7v2zm3-4H7V9h10v2zm0-4H7V5h10v2z"/></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cancel -->
+          <div class="cancel-wrap">
+            <div class="cancel-btn">取消</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="text-align:center; max-width: 600px; margin: 40px auto 0; padding: 24px; background: var(--c-bg-secondary); border-radius: 14px;">
+    <h3 style="margin: 0 0 12px; font-size: 18px; font-weight: 600;">为什么直接调系统分享面板</h3>
+    <p style="color: var(--c-fg-secondary); margin: 0 0 8px; line-height: 1.6; font-size: 14px;">
+      iOS 用户对系统分享面板<strong>极度熟悉</strong>，无任何学习成本。<br>
+      微信 / 朋友圈 / 小红书都是系统级集成，<strong>每次都自动出现在最常用位置</strong>。<br>
+      "保存图像" / "拷贝" / "存储到文件" 全是 iOS 原生 fallback，<strong>不需要 App 内自己实现</strong>。
+    </p>
+    <p style="color: var(--c-fg-tertiary); margin: 12px 0 0; font-size: 13px;">
+      → 工程上代码极少（一行 UIActivityViewController），但用户路径最短
+    </p>
+  </div>
+</div>
+
+<script src="../assets/js/shared.js"></script>
+</body>
+</html>
