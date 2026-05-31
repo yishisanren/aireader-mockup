@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML 轻阅 · Logo 4 方向对比</title>
+<style>
+  :root {
+    --bg-cream-100: #FAF7F0;
+    --bg-cream-200: #F5EFE0;
+    --brand-coral: #D97757;
+    --brand-burnt: #B8542A;
+    --brand-umber: #2C2825;
+    --ink-2: #5C534A;
+    --ink-3: #8B8076;
+    --line-soft: rgba(184, 84, 42, 0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI', sans-serif;
+    background: var(--bg-cream-100);
+    color: var(--brand-umber);
+    padding: 32px 16px 60px;
+    line-height: 1.6;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  header {
+    text-align: center;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line-soft);
+    margin-bottom: 40px;
+  }
+  h1 {
+    font-family: Georgia, serif;
+    font-size: 30px;
+    color: var(--brand-burnt);
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .intro {
+    background: var(--bg-cream-200);
+    border-left: 4px solid var(--brand-coral);
+    padding: 18px 22px;
+    border-radius: 4px;
+    margin-bottom: 40px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .intro strong { color: var(--brand-burnt); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(44, 40, 37, 0.08);
+    border: 1px solid var(--line-soft);
+  }
+  .card-header {
+    padding: 16px 20px;
+    background: var(--bg-cream-200);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .badge-letter {
+    display: inline-block;
+    background: var(--brand-coral);
+    color: white;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-family: Georgia, serif;
+    font-weight: 700;
+    margin-right: 8px;
+  }
+  .card-title {
+    font-family: Georgia, serif;
+    font-size: 19px;
+    color: var(--brand-burnt);
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .card-desc {
+    font-size: 13px;
+    color: var(--ink-2);
+    margin-top: 6px;
+    padding-left: 36px;
+  }
+
+  .big-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: var(--bg-cream-100);
+  }
+
+  .meta-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px 14px;
+    padding: 16px 20px;
+    font-size: 12.5px;
+    color: var(--ink-2);
+    border-top: 1px solid var(--line-soft);
+  }
+  .meta-row dt {
+    font-weight: 600;
+    color: var(--brand-burnt);
+    white-space: nowrap;
+  }
+  .meta-row dd { margin: 0; }
+
+  .size-row {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 16px 20px;
+    background: var(--bg-cream-200);
+    border-top: 1px solid var(--line-soft);
+  }
+  .size-item { text-align: center; }
+  .size-item img {
+    display: block;
+    border-radius: 22%;
+    box-shadow: 0 2px 8px rgba(44,40,37,0.15);
+  }
+  .size-item.s180 img { width: 90px; height: 90px; }
+  .size-item.s60 img { width: 60px; height: 60px; }
+  .size-label {
+    font-size: 10px;
+    color: var(--ink-3);
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+  .size-divider {
+    width: 1px;
+    height: 60px;
+    background: var(--line-soft);
+  }
+  .size-note {
+    font-size: 12px;
+    color: var(--ink-3);
+    flex: 1;
+  }
+
+  .verdict {
+    padding: 14px 20px;
+    background: linear-gradient(180deg, transparent, rgba(217,119,87,0.06));
+    border-top: 1px solid var(--line-soft);
+    font-size: 13px;
+  }
+  .verdict-pros, .verdict-cons {
+    margin: 4px 0;
+  }
+  .verdict-pros::before { content: "✓ "; color: #16a34a; font-weight: 700; }
+  .verdict-cons::before { content: "× "; color: #dc2626; font-weight: 700; }
+
+  .score {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 6px;
+  }
+  .s-high { background: #d1fae5; color: #065f46; }
+  .s-mid { background: #fef3c7; color: #92400e; }
+
+  .decision {
+    margin-top: 48px;
+    padding: 28px;
+    background: white;
+    border-radius: 16px;
+    border: 2px solid var(--brand-coral);
+    box-shadow: 0 4px 14px rgba(44, 40, 37, 0.08);
+  }
+  .decision h2 {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    color: var(--brand-burnt);
+    margin-bottom: 14px;
+  }
+  .decision-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px 16px;
+    margin-top: 14px;
+    font-size: 14px;
+  }
+  .decision-grid dt {
+    font-weight: 700;
+    color: var(--brand-burnt);
+  }
+  footer {
+    text-align: center;
+    color: var(--ink-3);
+    font-size: 12px;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line-soft);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>HTML 轻阅 · Logo 方向探索</h1>
+    <div class="subtitle">4 directions · brand evolution v2</div>
+  </header>
+
+  <div class="intro">
+    <strong>探索目标</strong>：在 <strong>HTML 轻阅</strong> 新命名下，把 logo 元素从泛阅读符号（Q · Quiet Reading）转向<strong>明确的 HTML 视觉语言</strong>，保留之前确定的暖色调杂志徽章基底。
+    <br><br>
+    四个方向覆盖从"硬核技术"到"杂志阅读"的光谱——同样的圆环徽章 + 暖色调结构，只是中心符号不同。
+  </div>
+
+  <div class="grid">
+
+    <!-- 方向 A -->
+    <div class="card">
+      <div class="card-header">
+        <span class="badge-letter">A</span>
+        <span class="card-title">&lt;H&gt; 标签嵌字</span>
+        <div class="card-desc">尖括号包裹大写衬线 H，杂志感 + 技术符号融合</div>
+      </div>
+      <img class="big-img" src="logo-a-1024.png" alt="方向 A">
+      <dl class="meta-row">
+        <dt>含义</dt><dd>HTML 标签 + 大写 H（HTML 轻阅的 H）</dd>
+        <dt>气质</dt><dd>杂志感强，技术符号点缀</dd>
+        <dt>受众</dt><dd>既看代码也看人文阅读的双栖用户</dd>
+      </dl>
+      <div class="size-row">
+        <div class="size-item s180">
+          <img src="logo-a-180.png" alt="180">
+          <div class="size-label">180 · home</div>
+        </div>
+        <div class="size-divider"></div>
+        <div class="size-item s60">
+          <img src="logo-a-60.png" alt="60">
+          <div class="size-label">60 · spotlight</div>
+        </div>
+        <div class="size-note">小尺寸 H 中等可读，需做极简版本</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-pros">尖括号点出 HTML 身份，H 保留杂志衬线气质</div>
+        <div class="verdict-pros">和之前 Q 印章方向视觉延续性强</div>
+        <div class="verdict-cons">中心元素较挤，三个字符争夺视觉中心</div>
+        <span class="score s-high">综合 8.5</span>
+      </div>
+    </div>
+
+    <!-- 方向 B -->
+    <div class="card">
+      <div class="card-header">
+        <span class="badge-letter">B</span>
+        <span class="card-title">&lt;/&gt; 闭合标签徽章</span>
+        <div class="card-desc">经典程序员符号居中放大,dev tool 气质</div>
+      </div>
+      <img class="big-img" src="logo-b-1024.png" alt="方向 B">
+      <dl class="meta-row">
+        <dt>含义</dt><dd>HTML 通用代码符号,任何看到都知道是技术产品</dd>
+        <dt>气质</dt><dd>工程师友好,dev tool / IDE 联想</dd>
+        <dt>受众</dt><dd>开发者主导,程序员第一眼秒懂</dd>
+      </dl>
+      <div class="size-row">
+        <div class="size-item s180">
+          <img src="logo-b-180.png" alt="180">
+          <div class="size-label">180 · home</div>
+        </div>
+        <div class="size-divider"></div>
+        <div class="size-item s60">
+          <img src="logo-b-60.png" alt="60">
+          <div class="size-label">60 · spotlight</div>
+        </div>
+        <div class="size-note">符号简洁,小尺寸下三字符仍可辨</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-pros">技术身份最强烈,程序员认知零门槛</div>
+        <div class="verdict-pros">符号简洁,小尺寸适应性好</div>
+        <div class="verdict-cons">偏 dev tool,可能稀释"阅读"的人文气质</div>
+        <div class="verdict-cons">与 GitHub Octocat / VSCode 等已有图标视觉同质</div>
+        <span class="score s-mid">综合 7.5</span>
+      </div>
+    </div>
+
+    <!-- 方向 C -->
+    <div class="card">
+      <div class="card-header">
+        <span class="badge-letter">C</span>
+        <span class="card-title">&lt;h1&gt; 标签语义</span>
+        <div class="card-desc">完整 h1 标签 — HTML 文档"标题"层级，阅读语义最强</div>
+      </div>
+      <img class="big-img" src="logo-c-1024.png" alt="方向 C">
+      <dl class="meta-row">
+        <dt>含义</dt><dd>HTML 一级标题——既是 HTML 又是"标题/阅读"</dd>
+        <dt>气质</dt><dd>语义化文档结构,精准描述产品定位</dd>
+        <dt>受众</dt><dd>懂 HTML 的人会心一笑,不懂的人当成图形</dd>
+      </dl>
+      <div class="size-row">
+        <div class="size-item s180">
+          <img src="logo-c-180.png" alt="180">
+          <div class="size-label">180 · home</div>
+        </div>
+        <div class="size-divider"></div>
+        <div class="size-item s60">
+          <img src="logo-c-60.png" alt="60">
+          <div class="size-label">60 · spotlight</div>
+        </div>
+        <div class="size-note">4 字符在 60px 下偏挤,需小尺寸极简版</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-pros">语义"双关":HTML 标签 + 标题(头/h)联想</div>
+        <div class="verdict-pros">"h1" 字符量适中,辨识度比 </> 高</div>
+        <div class="verdict-cons">小尺寸 4 字符密度大,需做 home screen 简化</div>
+        <span class="score s-high">综合 8.5</span>
+      </div>
+    </div>
+
+    <!-- 方向 D -->
+    <div class="card">
+      <div class="card-header">
+        <span class="badge-letter">D</span>
+        <span class="card-title">折页文档 + &lt;/&gt; 角标</span>
+        <div class="card-desc">阅读为主体,HTML 是右下角注脚</div>
+      </div>
+      <img class="big-img" src="logo-d-1024.png" alt="方向 D">
+      <dl class="meta-row">
+        <dt>含义</dt><dd>这是阅读 App,恰好支持 HTML</dd>
+        <dt>气质</dt><dd>文档隐喻强,人文感最重</dd>
+        <dt>受众</dt><dd>面向"读 HTML 文档"的普通用户,不只是开发者</dd>
+      </dl>
+      <div class="size-row">
+        <div class="size-item s180">
+          <img src="logo-d-180.png" alt="180">
+          <div class="size-label">180 · home</div>
+        </div>
+        <div class="size-divider"></div>
+        <div class="size-item s60">
+          <img src="logo-d-60.png" alt="60">
+          <div class="size-label">60 · spotlight</div>
+        </div>
+        <div class="size-note">小尺寸下折角细节糊,可读性最差</div>
+      </div>
+      <div class="verdict">
+        <div class="verdict-pros">"阅读"语义最强,普通用户也能秒懂</div>
+        <div class="verdict-pros">和 A/B/C 三个圆形徽章视觉差异最大,有独特记忆点</div>
+        <div class="verdict-cons">小尺寸下文档细节丢失严重,辨识度最低</div>
+        <div class="verdict-cons">脱离之前的圆形徽章体系,需重新建视觉规范</div>
+        <span class="score s-mid">综合 7.0</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="decision">
+    <h2>🎯 推荐排序</h2>
+    <dl class="decision-grid">
+      <dt>#1 推荐</dt>
+      <dd><strong>方向 C · &lt;h1&gt;</strong>——语义双关最妙,圆形徽章延续 logo 体系,4 字符密度仍可控</dd>
+      <dt>#2 备选</dt>
+      <dd><strong>方向 A · &lt;H&gt;</strong>——杂志感最浓,适合主打"精致阅读"</dd>
+      <dt>#3 慎选</dt>
+      <dd><strong>方向 B · &lt;/&gt;</strong>——技术身份强但易撞 dev tool 同质</dd>
+      <dt>#4 大改</dt>
+      <dd><strong>方向 D · 折页</strong>——气质独立但需重做视觉规范</dd>
+    </dl>
+    <p style="margin-top: 16px; font-size: 13px; color: var(--ink-2);">
+      <strong>下一步</strong>:回复 A/B/C/D 锁定方向(或要求微调)。锁定后做 adaptive icon(大图带文字弧线 + 小图极简版),导出 13 个 iOS Asset 尺寸,推 GitHub Pages。
+    </p>
+  </div>
+
+  <footer>
+    HTML · READER · EST · 2026 — Logo Exploration v2
+  </footer>
+</div>
+</body>
+</html>

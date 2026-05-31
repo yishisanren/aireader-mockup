@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="HTML 轻阅 Logo D - 折页文档 + 标签角标">
+  <!-- ============================================
+       方向 D · 折页文档 + 角标 </>
+       核心：阅读隐喻为主（文档），HTML 是右下角注脚
+       含义：这是一个阅读 App，恰好支持 HTML
+       ============================================ -->
+
+  <defs>
+    <linearGradient id="bgD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF7F0"/>
+      <stop offset="1" stop-color="#F0E9DA"/>
+    </linearGradient>
+    <linearGradient id="paperD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFEFA"/>
+      <stop offset="1" stop-color="#F5EFE0"/>
+    </linearGradient>
+    <linearGradient id="foldD" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E8DCC0"/>
+      <stop offset="1" stop-color="#D9CBA8"/>
+    </linearGradient>
+    <pattern id="paperGrainD" x="0" y="0" width="3" height="3" patternUnits="userSpaceOnUse">
+      <circle cx="0.5" cy="0.5" r="0.3" fill="#2C2825"/>
+    </pattern>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bgD)"/>
+  <rect width="1024" height="1024" fill="url(#paperGrainD)" opacity="0.06"/>
+
+  <!-- ===== 文档主体（折页效果）===== -->
+  <!-- 阴影 -->
+  <rect x="244" y="180" width="556" height="700" rx="12" fill="#000" opacity="0.08" transform="translate(8 12)"/>
+
+  <!-- 主页面（右上角折角缺口）-->
+  <path d="M 232 168
+           L 668 168
+           L 792 292
+           L 792 856
+           Q 792 880, 768 880
+           L 256 880
+           Q 232 880, 232 856
+           Z"
+        fill="url(#paperD)"
+        stroke="#B8542A"
+        stroke-width="4"/>
+
+  <!-- 折角三角（更深的米色）-->
+  <path d="M 668 168
+           L 792 292
+           L 668 292
+           Z"
+        fill="url(#foldD)"
+        stroke="#B8542A"
+        stroke-width="3"/>
+
+  <!-- 文档内容线条（模拟段落）-->
+  <g stroke="#D97757" stroke-width="6" stroke-linecap="round" opacity="0.65">
+    <!-- 标题（粗短）-->
+    <line x1="292" y1="380" x2="540" y2="380" stroke-width="14" opacity="0.85"/>
+    <!-- 正文段落 -->
+    <line x1="292" y1="450" x2="720" y2="450" opacity="0.55"/>
+    <line x1="292" y1="490" x2="700" y2="490" opacity="0.55"/>
+    <line x1="292" y1="530" x2="650" y2="530" opacity="0.55"/>
+    <line x1="292" y1="570" x2="710" y2="570" opacity="0.55"/>
+    <line x1="292" y1="610" x2="600" y2="610" opacity="0.55"/>
+    <!-- 第二段 -->
+    <line x1="292" y1="680" x2="720" y2="680" opacity="0.55"/>
+    <line x1="292" y1="720" x2="690" y2="720" opacity="0.55"/>
+    <line x1="292" y1="760" x2="540" y2="760" opacity="0.55"/>
+  </g>
+
+  <!-- ===== 右下角 </> 角标徽章 ===== -->
+  <circle cx="760" cy="800" r="80" fill="#D97757" stroke="#B8542A" stroke-width="4"/>
+  <text x="760" y="836"
+        text-anchor="middle"
+        font-family="'DejaVu Sans Mono', 'Courier New', monospace"
+        font-size="68"
+        font-weight="700"
+        fill="#FAF7F0">&lt;/&gt;</text>
+
+  <!-- ===== 顶部品牌名 ===== -->
+  <text x="512" y="115"
+        text-anchor="middle"
+        font-family="'DejaVu Serif', Georgia, 'Times New Roman', serif"
+        font-size="60"
+        font-weight="700"
+        letter-spacing="8"
+        fill="#B8542A">HTML · READER</text>
+  <text x="512" y="952"
+        text-anchor="middle"
+        font-family="'DejaVu Serif', Georgia, 'Times New Roman', serif"
+        font-size="36"
+        font-weight="500"
+        letter-spacing="10"
+        fill="#B8542A"
+        opacity="0.7">EST · 2026</text>
+
+</svg>

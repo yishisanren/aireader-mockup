@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="HTML 轻阅 Logo B - 闭合标签徽章">
+  <!-- ============================================
+       方向 B · </> 闭合标签
+       核心：经典程序员符号，居中放大
+       含义：HTML 完整收尾，技术身份强烈
+       ============================================ -->
+
+  <defs>
+    <linearGradient id="bgB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF7F0"/>
+      <stop offset="1" stop-color="#F0E9DA"/>
+    </linearGradient>
+    <linearGradient id="sealBBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF7F0"/>
+      <stop offset="1" stop-color="#F5EFE0"/>
+    </linearGradient>
+    <pattern id="paperB" x="0" y="0" width="3" height="3" patternUnits="userSpaceOnUse">
+      <circle cx="0.5" cy="0.5" r="0.3" fill="#2C2825"/>
+    </pattern>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bgB)"/>
+  <rect width="1024" height="1024" fill="url(#paperB)" opacity="0.06"/>
+
+  <!-- 外层装饰圆环 -->
+  <circle cx="512" cy="512" r="400" fill="none" stroke="#D97757" stroke-width="8"/>
+  <circle cx="512" cy="512" r="378" fill="none" stroke="#D97757" stroke-width="2" opacity="0.6"/>
+
+  <!-- 主印章圆 -->
+  <circle cx="512" cy="512" r="350" fill="url(#sealBBg)" stroke="#B8542A" stroke-width="6"/>
+
+  <!-- 上下弧线文字 -->
+  <defs>
+    <path id="topArcB" d="M 232 512 A 280 280 0 0 1 792 512" fill="none"/>
+    <path id="botArcB" d="M 232 512 A 280 280 0 0 0 792 512" fill="none"/>
+  </defs>
+
+  <text font-family="'DejaVu Serif', Georgia, 'Times New Roman', serif" font-size="46" letter-spacing="14" fill="#B8542A" font-weight="700">
+    <textPath href="#topArcB" startOffset="50%" text-anchor="middle">HTML · READER</textPath>
+  </text>
+  <text font-family="'DejaVu Serif', Georgia, 'Times New Roman', serif" font-size="32" letter-spacing="10" fill="#B8542A" font-weight="500" opacity="0.7">
+    <textPath href="#botArcB" startOffset="50%" text-anchor="middle">EST · 2026</textPath>
+  </text>
+
+  <!-- 左右装饰小星点 -->
+  <g fill="#B8542A">
+    <circle cx="232" cy="512" r="6"/>
+    <circle cx="792" cy="512" r="6"/>
+  </g>
+
+  <!-- 中心 </> 闭合标签 -->
+  <text x="512" y="640"
+        text-anchor="middle"
+        font-family="'DejaVu Sans Mono', 'Courier New', 'Source Code Pro', monospace"
+        font-size="280"
+        font-weight="700"
+        fill="#C2613E">&lt;/&gt;</text>
+
+</svg>
