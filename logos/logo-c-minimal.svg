@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="AI 轻阅 Logo C - Minimal (home screen) v2">
+  <!-- ============================================
+       方向 C · 极简版 v2（home screen 用）
+       v1 → v2 修复：
+       - Q 字号 480 → 560，更大视觉权重
+       - Q baseline y=660 → y=695，居中（避免被外环裁切）
+       - Q 颜色加深 #D97757 → #C2613E（提升对比度）
+       - 外环加粗 14 → 18，小尺寸下仍可见
+       ============================================ -->
+
+  <defs>
+    <linearGradient id="bgMin2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF7F0"/>
+      <stop offset="1" stop-color="#F0E9DA"/>
+    </linearGradient>
+    <linearGradient id="sealMin2Bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF7F0"/>
+      <stop offset="1" stop-color="#F5EFE0"/>
+    </linearGradient>
+    <pattern id="paperMin2" x="0" y="0" width="3" height="3" patternUnits="userSpaceOnUse">
+      <circle cx="0.5" cy="0.5" r="0.3" fill="#2C2825"/>
+    </pattern>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bgMin2)"/>
+  <rect width="1024" height="1024" fill="url(#paperMin2)" opacity="0.06"/>
+
+  <!-- 外层装饰圆环（加粗到 18px，小尺寸可见）-->
+  <circle cx="512" cy="512" r="440" fill="none" stroke="#D97757" stroke-width="18"/>
+
+  <!-- 主印章圆 -->
+  <circle cx="512" cy="512" r="405" fill="url(#sealMin2Bg)" stroke="#B8542A" stroke-width="10"/>
+
+  <!-- 左右装饰小星点 -->
+  <g fill="#B8542A">
+    <circle cx="180" cy="512" r="12"/>
+    <circle cx="844" cy="512" r="12"/>
+  </g>
+
+  <!-- 中心大 Q（颜色加深 + 字号加大 + 位置居中）-->
+  <text x="512" y="695"
+        text-anchor="middle"
+        font-family="'DejaVu Serif', Georgia, 'Times New Roman', 'Source Serif Pro', serif"
+        font-size="560"
+        font-weight="700"
+        fill="#C2613E"
+        font-style="italic">Q</text>
+
+</svg>
