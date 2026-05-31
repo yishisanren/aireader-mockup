@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 轻阅 · 品牌色规范 (Brand Color System)</title>
+<style>
+  :root {
+    --bg-cream-100: #FAF7F0;
+    --bg-cream-200: #F5EFE0;
+    --bg-cream-300: #F0E9DA;
+    --brand-coral: #D97757;
+    --brand-burnt-orange: #B8542A;
+    --brand-deep-umber: #2C2825;
+    --ink-primary: #2C2825;
+    --ink-secondary: #5C534A;
+    --ink-tertiary: #8B8076;
+    --line-soft: rgba(184, 84, 42, 0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+    background: var(--bg-cream-100);
+    color: var(--ink-primary);
+    padding: 40px 24px;
+    line-height: 1.6;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 32px;
+    margin-bottom: 8px;
+    color: var(--brand-burnt-orange);
+  }
+  .subtitle {
+    font-size: 14px;
+    color: var(--ink-tertiary);
+    margin-bottom: 32px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  h2 {
+    font-family: Georgia, serif;
+    font-size: 20px;
+    margin: 40px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line-soft);
+    color: var(--brand-burnt-orange);
+  }
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .swatch {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(44, 40, 37, 0.08);
+    background: white;
+  }
+  .swatch-color {
+    height: 120px;
+    display: flex;
+    align-items: flex-end;
+    padding: 12px;
+    color: white;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .swatch-color.light { color: var(--ink-primary); text-shadow: none; }
+  .swatch-info {
+    padding: 12px 14px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .swatch-name { font-weight: 600; color: var(--ink-primary); margin-bottom: 4px; }
+  .swatch-code { font-family: monospace; color: var(--ink-secondary); font-size: 11px; }
+  .swatch-desc { color: var(--ink-tertiary); margin-top: 6px; font-size: 11px; }
+  pre {
+    background: var(--ink-primary);
+    color: var(--bg-cream-100);
+    padding: 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 12px;
+    line-height: 1.7;
+    margin: 16px 0;
+  }
+  .copy-block {
+    background: white;
+    border: 1px solid var(--line-soft);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 12px 0;
+    font-family: monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--ink-secondary);
+    white-space: pre-wrap;
+  }
+  .meta { font-size: 13px; color: var(--ink-secondary); margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>AI 轻阅 · 品牌色规范</h1>
+  <div class="subtitle">Brand Color System · v1.0 · EST · 2026</div>
+
+  <h2>① 核心三色 (Primary Palette)</h2>
+  <div class="meta">这三个颜色定义整个品牌的"主旋律"。任何 AI 修图，主体颜色就用这三个。</div>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#D97757;">珊瑚橘</div>
+      <div class="swatch-info">
+        <div class="swatch-name">Brand Coral</div>
+        <div class="swatch-code">#D97757 · rgb(217,119,87)</div>
+        <div class="swatch-desc">主品牌色 · 按钮 / 强调 / Logo 外环</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#B8542A;">深赭石</div>
+      <div class="swatch-info">
+        <div class="swatch-name">Burnt Orange</div>
+        <div class="swatch-code">#B8542A · rgb(184,84,42)</div>
+        <div class="swatch-desc">辅助主色 · 文字 / 边框 / Logo 主体</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#2C2825;">深褐墨</div>
+      <div class="swatch-info">
+        <div class="swatch-name">Deep Umber</div>
+        <div class="swatch-code">#2C2825 · rgb(44,40,37)</div>
+        <div class="swatch-desc">正文文字 / 高对比阅读色</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>② 米色背景系 (Cream Background)</h2>
+  <div class="meta">取代纯白的"杂志纸张感"背景。任何场景下不要用纯白 #FFFFFF。</div>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch-color light" style="background:#FAF7F0;">米白</div>
+      <div class="swatch-info">
+        <div class="swatch-name">Cream 100</div>
+        <div class="swatch-code">#FAF7F0 · rgb(250,247,240)</div>
+        <div class="swatch-desc">主背景 · App 大面积底色</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color light" style="background:#F5EFE0;">米黄</div>
+      <div class="swatch-info">
+        <div class="swatch-name">Cream 200</div>
+        <div class="swatch-code">#F5EFE0 · rgb(245,239,224)</div>
+        <div class="swatch-desc">卡片底 / 次级面板</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color light" style="background:#F0E9DA;">深米</div>
+      <div class="swatch-info">
+        <div class="swatch-name">Cream 300</div>
+        <div class="swatch-code">#F0E9DA · rgb(240,233,218)</div>
+        <div class="swatch-desc">分隔背景 / Hover 状态</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>③ 文字与辅助色 (Ink & Utility)</h2>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#2C2825;">主文字</div>
+      <div class="swatch-info">
+        <div class="swatch-name">Ink Primary</div>
+        <div class="swatch-code">#2C2825</div>
+        <div class="swatch-desc">标题 / 正文 / 重要信息</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#5C534A;">次文字</div>
+      <div class="swatch-info">
+        <div class="swatch-name">Ink Secondary</div>
+        <div class="swatch-code">#5C534A</div>
+        <div class="swatch-desc">说明文字 / 元数据</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#8B8076;">辅助文字</div>
+      <div class="swatch-info">
+        <div class="swatch-name">Ink Tertiary</div>
+        <div class="swatch-code">#8B8076</div>
+        <div class="swatch-desc">占位文字 / 禁用态</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>④ 给 AI 修图的描述词 (Prompt-Friendly Description)</h2>
+  <div class="meta">直接复制下面这段喂给 AI 改图：</div>
+  <div class="copy-block">Brand color palette: warm cream paper background (#FAF7F0), coral orange (#D97757), burnt orange (#B8542A), deep umber (#2C2825). Aesthetic: vintage magazine cover, editorial print, Monocle / New Yorker style. Avoid pure white, neon, cool blue. Texture: subtle paper grain, no glossy gradients. Mood: quiet, refined, slow-reading, intellectual.</div>
+
+  <h2>⑤ 设计原则 (Design Principles)</h2>
+  <div class="copy-block">1. 永远不要用纯白 #FFFFFF，背景至少用 #FAF7F0
+2. 主橘色 #D97757 是品牌灵魂，不可随意替换
+3. 任何 CTA 按钮用 #D97757，hover 加深到 #B8542A
+4. 阅读场景文字必须用 #2C2825，保证 AAA 对比度
+5. 卡片层级靠米色深浅 100 → 200 → 300 自然过渡
+6. 标题用 Georgia 衬线，正文可用 PingFang / SF Pro
+7. 视觉气质参照：Monocle 杂志、New Yorker、独立咖啡品牌
+8. 禁用：荧光色、冷蓝色、霓虹粉、纯黑 #000000</div>
+
+  <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line-soft); color: var(--ink-tertiary); font-size: 12px;">
+    AI 轻阅 · Quiet Reading · EST · 2026 — Brand v1.0
+  </div>
+</div>
+</body>
+</html>
