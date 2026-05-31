@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="HTML 轻阅 Logo B v2 - 弱化外括号">
+  <!-- ============================================
+       方向 B v2 · </> 弱化版
+       策略：拆成三层重量
+       - 外层 < > 弱化（小 + opacity 0.35）
+       - 中间斜杠 / 强化（大 + 实色）
+       - 让"斜线"成为视觉焦点，远看像一个倾斜符号
+       ============================================ -->
+
+  <defs>
+    <linearGradient id="bgB2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF7F0"/>
+      <stop offset="1" stop-color="#F0E9DA"/>
+    </linearGradient>
+    <linearGradient id="sealB2Bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF7F0"/>
+      <stop offset="1" stop-color="#F5EFE0"/>
+    </linearGradient>
+    <pattern id="paperB2" x="0" y="0" width="3" height="3" patternUnits="userSpaceOnUse">
+      <circle cx="0.5" cy="0.5" r="0.3" fill="#2C2825"/>
+    </pattern>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bgB2)"/>
+  <rect width="1024" height="1024" fill="url(#paperB2)" opacity="0.06"/>
+
+  <circle cx="512" cy="512" r="400" fill="none" stroke="#D97757" stroke-width="8"/>
+  <circle cx="512" cy="512" r="378" fill="none" stroke="#D97757" stroke-width="2" opacity="0.6"/>
+  <circle cx="512" cy="512" r="350" fill="url(#sealB2Bg)" stroke="#B8542A" stroke-width="6"/>
+
+  <defs>
+    <path id="topArcB2" d="M 232 512 A 280 280 0 0 1 792 512" fill="none"/>
+    <path id="botArcB2" d="M 232 512 A 280 280 0 0 0 792 512" fill="none"/>
+  </defs>
+
+  <text font-family="'DejaVu Serif', Georgia, 'Times New Roman', serif" font-size="46" letter-spacing="14" fill="#B8542A" font-weight="700">
+    <textPath href="#topArcB2" startOffset="50%" text-anchor="middle">HTML · READER</textPath>
+  </text>
+  <text font-family="'DejaVu Serif', Georgia, 'Times New Roman', serif" font-size="32" letter-spacing="10" fill="#B8542A" font-weight="500" opacity="0.7">
+    <textPath href="#botArcB2" startOffset="50%" text-anchor="middle">EST · 2026</textPath>
+  </text>
+
+  <g fill="#B8542A">
+    <circle cx="232" cy="512" r="6"/>
+    <circle cx="792" cy="512" r="6"/>
+  </g>
+
+  <!-- 左 < 弱化 -->
+  <text x="370" y="610"
+        text-anchor="middle"
+        font-family="'DejaVu Sans Mono', 'Courier New', monospace"
+        font-size="200"
+        font-weight="400"
+        fill="#D97757"
+        opacity="0.35">&lt;</text>
+
+  <!-- 中间 / 强化（成为视觉焦点）-->
+  <text x="512" y="660"
+        text-anchor="middle"
+        font-family="'DejaVu Serif', Georgia, 'Times New Roman', serif"
+        font-size="420"
+        font-weight="700"
+        fill="#C2613E"
+        font-style="italic">/</text>
+
+  <!-- 右 > 弱化 -->
+  <text x="654" y="610"
+        text-anchor="middle"
+        font-family="'DejaVu Sans Mono', 'Courier New', monospace"
+        font-size="200"
+        font-weight="400"
+        fill="#D97757"
+        opacity="0.35">&gt;</text>
+
+</svg>

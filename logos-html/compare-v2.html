@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML 轻阅 · Logo 弱括号对比</title>
+<style>
+  :root {
+    --bg-cream-100: #FAF7F0;
+    --bg-cream-200: #F5EFE0;
+    --brand-coral: #D97757;
+    --brand-burnt: #B8542A;
+    --brand-umber: #2C2825;
+    --ink-2: #5C534A;
+    --ink-3: #8B8076;
+    --line-soft: rgba(184, 84, 42, 0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Segoe UI', sans-serif;
+    background: var(--bg-cream-100);
+    color: var(--brand-umber);
+    padding: 32px 16px 60px;
+    line-height: 1.6;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+  header {
+    text-align: center;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line-soft);
+    margin-bottom: 30px;
+  }
+  h1 {
+    font-family: Georgia, serif;
+    font-size: 28px;
+    color: var(--brand-burnt);
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .intro {
+    background: var(--bg-cream-200);
+    border-left: 4px solid var(--brand-coral);
+    padding: 18px 22px;
+    border-radius: 4px;
+    margin-bottom: 36px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  .intro strong { color: var(--brand-burnt); }
+  .intro code {
+    background: rgba(217,119,87,0.12);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-family: 'DejaVu Sans Mono', Menlo, monospace;
+    font-size: 13px;
+  }
+
+  .nav-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--brand-coral);
+    text-decoration: none;
+    font-size: 13px;
+    border-bottom: 1px dotted var(--brand-coral);
+  }
+
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-title {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    color: var(--brand-burnt);
+    margin-bottom: 4px;
+  }
+  .section-sub {
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-bottom: 18px;
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(44, 40, 37, 0.08);
+    border: 1px solid var(--line-soft);
+  }
+  @media (max-width: 720px) {
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+
+  .panel {
+    padding: 20px;
+  }
+  .panel.v1 { border-right: 1px solid var(--line-soft); }
+  @media (max-width: 720px) {
+    .panel.v1 { border-right: none; border-bottom: 1px solid var(--line-soft); }
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .version-pill {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .pill-v1 { background: #e2e8f0; color: #475569; }
+  .pill-v2 { background: #fef3c7; color: #92400e; }
+  .panel-label {
+    font-family: Georgia, serif;
+    font-size: 14px;
+    color: var(--ink-2);
+    margin-left: 10px;
+  }
+  .main-img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    background: var(--bg-cream-100);
+  }
+  .size-row {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .size-item img {
+    display: block;
+    border-radius: 22%;
+    box-shadow: 0 2px 8px rgba(44,40,37,0.18);
+  }
+  .size-item.s180 img { width: 80px; height: 80px; }
+  .size-item.s60 img { width: 60px; height: 60px; }
+  .size-label {
+    font-size: 10px;
+    color: var(--ink-3);
+    margin-top: 4px;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+  .panel-note {
+    font-size: 12px;
+    color: var(--ink-2);
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+  .panel-note strong { color: var(--brand-burnt); }
+
+  .verdict {
+    background: var(--bg-cream-200);
+    padding: 14px 20px;
+    margin-top: 16px;
+    border-left: 3px solid var(--brand-coral);
+    font-size: 13px;
+    color: var(--ink-2);
+    border-radius: 0 6px 6px 0;
+  }
+  .verdict strong { color: var(--brand-burnt); }
+
+  .decision {
+    margin-top: 48px;
+    padding: 28px;
+    background: white;
+    border-radius: 16px;
+    border: 2px solid var(--brand-coral);
+    box-shadow: 0 4px 14px rgba(44, 40, 37, 0.08);
+  }
+  .decision h2 {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    color: var(--brand-burnt);
+    margin-bottom: 14px;
+  }
+  .decision p {
+    font-size: 14px;
+    color: var(--ink-2);
+    margin-bottom: 12px;
+  }
+  .recommend {
+    background: linear-gradient(180deg, rgba(217,119,87,0.08), transparent);
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-top: 16px;
+    font-size: 14px;
+  }
+  footer {
+    text-align: center;
+    color: var(--ink-3);
+    font-size: 12px;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line-soft);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>HTML 轻阅 · 弱括号对比</h1>
+    <div class="subtitle">v1 原版 vs v2 弱括号版</div>
+  </header>
+
+  <div class="intro">
+    <strong>调整目标</strong>：把 <code>&lt;&gt;</code> 从视觉主元素降为陪衬，让中心字符（H / h1 / 斜杠）成为绝对主角。
+    <br><br>
+    <strong>控制变量</strong>：括号字号缩到 70%、opacity 降到 0.35、字重从 bold 改 regular；中央字符同步放大 20-50%。
+    <a class="nav-link" href="index.html">← 回到 v1 全 4 方向对比页</a>
+  </div>
+
+  <!-- ===== 方向 A ===== -->
+  <div class="section">
+    <div class="section-title">方向 A · &lt;H&gt; 标签嵌字</div>
+    <div class="section-sub">大写衬线 H 作为视觉主角</div>
+    <div class="compare-grid">
+      <div class="panel v1">
+        <div class="panel-header">
+          <span class="version-pill pill-v1">V1</span>
+          <span class="panel-label">原版（括号实色）</span>
+        </div>
+        <img class="main-img" src="logo-a-1024.png" alt="A v1">
+        <div class="size-row">
+          <div class="size-item s180"><img src="logo-a-180.png" alt=""><div class="size-label">180</div></div>
+          <div class="size-item s60"><img src="logo-a-60.png" alt=""><div class="size-label">60</div></div>
+        </div>
+        <div class="panel-note">括号 320 字号 + opacity 1 + bold。三个字符权重相当，争夺视觉中心。</div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <span class="version-pill pill-v2">V2</span>
+          <span class="panel-label">弱括号版</span>
+        </div>
+        <img class="main-img" src="logo-a-v2-1024.png" alt="A v2">
+        <div class="size-row">
+          <div class="size-item s180"><img src="logo-a-v2-180.png" alt=""><div class="size-label">180</div></div>
+          <div class="size-item s60"><img src="logo-a-v2-60.png" alt=""><div class="size-label">60</div></div>
+        </div>
+        <div class="panel-note">括号 220 字号 + <strong>opacity 0.35</strong> + regular，H 字号 340 → <strong>420</strong>。H 成为绝对焦点。</div>
+      </div>
+    </div>
+    <div class="verdict">
+      <strong>评价</strong>：v2 视觉层级最清晰——H 主，括号弱化为"标签暗示"。和当前 V0（Q 印章）的风格延续性最强，几乎只是把字母从 Q 换成了 H。<strong>推荐</strong>。
+    </div>
+  </div>
+
+  <!-- ===== 方向 B ===== -->
+  <div class="section">
+    <div class="section-title">方向 B · &lt;/&gt; 闭合标签</div>
+    <div class="section-sub">把视觉主角让给斜杠 /</div>
+    <div class="compare-grid">
+      <div class="panel v1">
+        <div class="panel-header">
+          <span class="version-pill pill-v1">V1</span>
+          <span class="panel-label">原版（三字符等重）</span>
+        </div>
+        <img class="main-img" src="logo-b-1024.png" alt="B v1">
+        <div class="size-row">
+          <div class="size-item s180"><img src="logo-b-180.png" alt=""><div class="size-label">180</div></div>
+          <div class="size-item s60"><img src="logo-b-60.png" alt=""><div class="size-label">60</div></div>
+        </div>
+        <div class="panel-note">三字符全部 mono bold 280，视觉非常"工程师"。</div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <span class="version-pill pill-v2">V2</span>
+          <span class="panel-label">弱括号版</span>
+        </div>
+        <img class="main-img" src="logo-b-v2-1024.png" alt="B v2">
+        <div class="size-row">
+          <div class="size-item s180"><img src="logo-b-v2-180.png" alt=""><div class="size-label">180</div></div>
+          <div class="size-item s60"><img src="logo-b-v2-60.png" alt=""><div class="size-label">60</div></div>
+        </div>
+        <div class="panel-note">括号 opacity 0.35 + 缩小；中间斜杠 / 换成 <strong>衬线斜体大字</strong>（420px），成为视觉焦点。</div>
+      </div>
+    </div>
+    <div class="verdict">
+      <strong>评价</strong>：v2 视觉上变得优雅，但<strong>有得有失</strong>——括号太弱后，整体看像"一个大斜杠"，HTML 标签识别度降低。如果产品强调"轻 + 阅读"而不是"代码"，v2 更合适；如果想保留 dev tool 身份，v1 更直接。
+    </div>
+  </div>
+
+  <!-- ===== 方向 C ===== -->
+  <div class="section">
+    <div class="section-title">方向 C · &lt;h1&gt; 标签语义</div>
+    <div class="section-sub">h1 作为视觉主角</div>
+    <div class="compare-grid">
+      <div class="panel v1">
+        <div class="panel-header">
+          <span class="version-pill pill-v1">V1</span>
+          <span class="panel-label">原版（mono 等宽 4 字符）</span>
+        </div>
+        <img class="main-img" src="logo-c-1024.png" alt="C v1">
+        <div class="size-row">
+          <div class="size-item s180"><img src="logo-c-180.png" alt=""><div class="size-label">180</div></div>
+          <div class="size-item s60"><img src="logo-c-60.png" alt=""><div class="size-label">60</div></div>
+        </div>
+        <div class="panel-note">4 字符 mono bold 220，全部同色同重，整体偏程序员。</div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <span class="version-pill pill-v2">V2</span>
+          <span class="panel-label">弱括号版</span>
+        </div>
+        <img class="main-img" src="logo-c-v2-1024.png" alt="C v2">
+        <div class="size-row">
+          <div class="size-item s180"><img src="logo-c-v2-180.png" alt=""><div class="size-label">180</div></div>
+          <div class="size-item s60"><img src="logo-c-v2-60.png" alt=""><div class="size-label">60</div></div>
+        </div>
+        <div class="panel-note">括号 160 + opacity 0.35 + regular；h1 换成 <strong>衬线斜体 320px</strong>，成为视觉主角，HTML 标签退为暗示。</div>
+      </div>
+    </div>
+    <div class="verdict">
+      <strong>评价</strong>：v2 实现了"字符为主、标签为辅"的视觉语义——既保留 HTML 身份，又让 h1（标题/Header/阅读）成为绝对焦点。<strong>语义双关最完整</strong>，是综合表现最强的版本。
+    </div>
+  </div>
+
+  <div class="decision">
+    <h2>🎯 我的最终推荐</h2>
+    <p>三个 v2 方向中，按"控制论最优控制"角度：</p>
+    <div class="recommend">
+      <strong>#1 推荐 · 方向 C v2 (&lt;h1&gt; 弱括号)</strong><br>
+      <span style="font-size:13px;color:var(--ink-2);">语义双关最完整、视觉层级最清晰、和之前 Q 印章风格延续性强。</span>
+    </div>
+    <div class="recommend">
+      <strong>#2 备选 · 方向 A v2 (&lt;H&gt; 弱括号)</strong><br>
+      <span style="font-size:13px;color:var(--ink-2);">最杂志感、最克制。如果你想要"老牌出版物"的气质，选这个。</span>
+    </div>
+    <div class="recommend">
+      <strong>#3 慎选 · 方向 B v2 (&lt;/&gt; 弱括号)</strong><br>
+      <span style="font-size:13px;color:var(--ink-2);">优雅但 HTML 识别度下降。除非你接受"主角是斜杠，括号只是装饰"的取舍。</span>
+    </div>
+
+    <p style="margin-top: 22px;">
+      <strong>下一步</strong>：回复 <code>A2 / B2 / C2</code> 锁定方向，或回复 <code>A1/B1/C1</code> 锁定原版。锁定后做 adaptive icon（1024 完整版 + ≤180 极简版，去文字保字符），导出 13 个 iOS Asset 尺寸。
+    </p>
+    <p style="font-size: 12px; color: var(--ink-3);">
+      也可以继续调（"C2 但括号再弱一点"、"A2 但 H 不用斜体"等），告诉我控制变量。
+    </p>
+  </div>
+
+  <footer>
+    HTML · READER · EST · 2026 — Logo Exploration v2 (Weak Bracket)
+  </footer>
+</div>
+</body>
+</html>
