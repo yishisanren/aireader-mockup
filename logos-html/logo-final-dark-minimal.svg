@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="HTML 轻阅 Logo Final Minimal Dark - h1 印章暗色版（home screen）">
+  <!-- ============================================
+       正式版 · 极简版 · 暗色版（home screen 用，≤180px）
+       基于 logo-final-minimal.svg（即 C v2 极简版）的暗色映射：
+       - 浅色 #D97757 → 暗色 #E89070
+       - 浅色 #B8542A → 暗色 #D67852
+       - 浅色 #C2613E → 暗色 #E58660
+       - 米色渐变 → #2A2622/#33302B 暗色渐变
+       - paper dot #2C2825 → #E8E2D8 (暗底上反向 grain)
+       结构与浅色完全一致（h1 字号 480 + 占绝对视觉中心 + 极简）
+       ============================================ -->
+
+  <defs>
+    <linearGradient id="bgFMDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2A2622"/>
+      <stop offset="1" stop-color="#33302B"/>
+    </linearGradient>
+    <linearGradient id="sealFMBgDark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2A2622"/>
+      <stop offset="1" stop-color="#33302B"/>
+    </linearGradient>
+    <pattern id="paperFMDark" x="0" y="0" width="3" height="3" patternUnits="userSpaceOnUse">
+      <circle cx="0.5" cy="0.5" r="0.3" fill="#E8E2D8"/>
+    </pattern>
+  </defs>
+
+  <rect width="1024" height="1024" fill="url(#bgFMDark)"/>
+  <rect width="1024" height="1024" fill="url(#paperFMDark)" opacity="0.06"/>
+
+  <!-- 外层装饰圆环（加粗到 18px，小尺寸可见）-->
+  <circle cx="512" cy="512" r="440" fill="none" stroke="#E89070" stroke-width="18"/>
+
+  <!-- 主印章圆 -->
+  <circle cx="512" cy="512" r="405" fill="url(#sealFMBgDark)" stroke="#D67852" stroke-width="10"/>
+
+  <!-- 左右装饰小星点（保留杂志徽章识别符）-->
+  <g fill="#D67852">
+    <circle cx="180" cy="512" r="12"/>
+    <circle cx="844" cy="512" r="12"/>
+  </g>
+
+  <!-- 左尖括号：弱化 -->
+  <text x="240" y="660"
+        text-anchor="middle"
+        font-family="'DejaVu Sans Mono', 'Courier New', monospace"
+        font-size="220"
+        font-weight="400"
+        fill="#E89070"
+        opacity="0.35">&lt;</text>
+
+  <!-- 中央 h1：强化（衬线大字 + 斜体 + 暗色版 h1 主色）-->
+  <text x="512" y="695"
+        text-anchor="middle"
+        font-family="'DejaVu Serif', Georgia, 'Times New Roman', serif"
+        font-size="480"
+        font-weight="700"
+        fill="#E58660"
+        font-style="italic">h1</text>
+
+  <!-- 右尖括号：弱化 -->
+  <text x="784" y="660"
+        text-anchor="middle"
+        font-family="'DejaVu Sans Mono', 'Courier New', monospace"
+        font-size="220"
+        font-weight="400"
+        fill="#E89070"
+        opacity="0.35">&gt;</text>
+
+</svg>
